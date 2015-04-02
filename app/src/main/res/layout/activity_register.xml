@@ -17,21 +17,6 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.gms.common.SignInButton android:id="@+id/filler"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
-
-            <TextView android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textSize="10pt"
-                android:text="@string/title_activity_register" />
-
-            <com.google.android.gms.common.SignInButton android:id="@+id/filler2"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
-
             <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
                 android:layout_height="477dp" android:orientation="vertical">
 

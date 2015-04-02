@@ -12,7 +12,6 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.plus.PlusClient;
 
-
 /**
  * A base class to wrap communication with the Google Play Services PlusClient.
  */
