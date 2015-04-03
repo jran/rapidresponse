@@ -16,6 +16,7 @@
     <string name="error_blank_lastname">Last name was not entered</string>
     <string name="error_blank_email">Email was not entered</string>
     <string name="error_blank_phone">Cellphone number was not entered</string>
+    <string name="error_invalid_phone">Cellphone number was invalid</string>
     <string name="error_blank_password">Password was not entered</string>
     <string name="error_blank_team">Team was not selected</string>
     <string name="error_blank_building">Building was not selected</string>
