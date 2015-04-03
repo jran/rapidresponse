@@ -20,7 +20,7 @@
             <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
                 android:layout_height="477dp" android:orientation="vertical">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/firstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
                     android:singleLine="true"
                     android:layout_gravity="center_horizontal" />
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/lastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -40,47 +40,17 @@
                     android:singleLine="true"
                     android:layout_gravity="center_horizontal" />
 
-                <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
+                <EditText android:id="@+id/email" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress" android:maxLines="1"
                     android:singleLine="true" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/autoCompleteTextView"
+                <EditText
+                    android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_cellphone"
                     android:inputType="phone"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_gravity="center_horizontal" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/team"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_team"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_gravity="center_horizontal" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/building"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_building"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_gravity="center_horizontal" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/role"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_role"
-                    android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:layout_gravity="center_horizontal" />
@@ -103,6 +73,31 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
+
+                <Spinner
+                    android:prompt="@string/prompt_team"
+                    android:id="@+id/teamSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="25pt"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown"
+                    />
+
+                <Spinner
+                    android:prompt="@string/prompt_building"
+                    android:id="@+id/buildingSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="25pt"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+                <Spinner
+                    android:prompt="@string/prompt_role"
+                    android:id="@+id/roleSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="25pt"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
 
                 <Button android:id="@+id/email_register_button" style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"

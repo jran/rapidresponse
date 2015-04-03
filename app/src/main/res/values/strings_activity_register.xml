@@ -9,10 +9,21 @@
     <string name="prompt_team">Rapid Response Team</string>
     <string name="prompt_building">Hospital Building</string>
     <string name="prompt_role">Role</string>
-    <string name="prompt_password">Password </string>
+    <string name="prompt_password">Password (minimum 5 characters)</string>
     <string name="action_register">Register</string>
+    <string name="error_intro">The following errors exist:</string>
+    <string name="error_blank_firstname">First name was not entered</string>
+    <string name="error_blank_lastname">Last name was not entered</string>
+    <string name="error_blank_email">Email was not entered</string>
+    <string name="error_blank_phone">Cellphone number was not entered</string>
+    <string name="error_invalid_phone">Cellphone number was invalid</string>
+    <string name="error_blank_password">Password was not entered</string>
+    <string name="error_blank_team">Team was not selected</string>
+    <string name="error_blank_building">Building was not selected</string>
+    <string name="error_blank_role">Role was not selected</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">Passwords do not match</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_duplicate_email">This email address is already used</string>
+    <string name="progress_signup">Creating Account</string>
 </resources>
