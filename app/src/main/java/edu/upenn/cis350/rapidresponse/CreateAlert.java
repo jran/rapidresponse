@@ -3,11 +3,11 @@ package edu.upenn.cis350.rapidresponse;
 import android.os.Bundle;
 
 /**
- * Created by elianamason on 3/28/15.
+ * Created by jran on 2015/4/3.
  */
-public class Receive_NotificationActivity {
+public class CreateAlert {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.receive_notification);
+        setContentView(R.layout.activity_create_alert);
     }
 }
