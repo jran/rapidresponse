@@ -5,39 +5,32 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 
 import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.telephony.PhoneNumberUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends Activity implements AdapterView.OnItemSelectedListener{
     private EditText firstNameEditText;
@@ -67,22 +60,60 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         firstNameEditText = (EditText) findViewById(R.id.firstName);
         lastNameEditText = (EditText) findViewById(R.id.lastName);
         emailEditText = (EditText) findViewById(R.id.email);
-        phoneEditText = (EditText) findViewById(R.id.phone);
         password1EditText = (EditText) findViewById(R.id.password1);
         password2EditText = (EditText) findViewById(R.id.password2);
-        Spinner dropdown = (Spinner)findViewById(R.id.team);
+        phoneEditText = (EditText) findViewById(R.id.phone);
+        phoneEditText.addTextChangedListener(new TextWatcher() {
+            private boolean flag = true;
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                System.out.println(flag);
+                if(flag == true) {
+                    String number = s.toString();
+                    int i = 0;
+                    while (i < number.length()) {
+                        if (number.charAt(i) == '-' && i != number.length()) {
+                            number = number.substring(0, i) + number.substring(i+1, number.length());
+                        } else if (number.charAt(i) == '-') {
+                            number = number.substring(0, i);
+                        }
+                        i++;
+                    }
+                    if(number.length() != 10){
+                        flag = false;
+                        phoneEditText.setText(number);
+                    } else if (number.length() == 10) {
+                        number = number.substring(0, 3) + "-" + number.substring(3, 6) + "-" + number.substring(6);
+                        flag = false;
+                        phoneEditText.setText(number);
+                    }
+                } else {
+                    flag = true;
+                }
+            }
+        });
+        Spinner teamSpinner = (Spinner)findViewById(R.id.teamSpinner);
         String[] items = new String[]{"team 1", "team 2", "team 3"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-        dropdown.setAdapter(adapter);
-        dropdown.setOnItemSelectedListener(this);
-        dropdown = (Spinner)findViewById(R.id.building);
+        teamSpinner.setAdapter(adapter);
+        teamSpinner.setOnItemSelectedListener(this);
+        Spinner buildingSpinner = (Spinner)findViewById(R.id.buildingSpinner);
         items = new String[]{"building 1", "building 2", "building 3"};
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-        dropdown.setAdapter(adapter);
-        dropdown = (Spinner)findViewById(R.id.role);
+        buildingSpinner.setAdapter(adapter);
+        buildingSpinner.setOnItemSelectedListener(this);
+        Spinner roleSpinner = (Spinner)findViewById(R.id.roleSpinner);
         items = new String[]{"role 1", "role 2", "role 3"};
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-        dropdown.setAdapter(adapter);
+        roleSpinner.setAdapter(adapter);
+        roleSpinner.setOnItemSelectedListener(this);
 
         Button mEmailSignUpButton = (Button) findViewById(R.id.email_register_button);
         mEmailSignUpButton.setOnClickListener(new OnClickListener() {
@@ -100,14 +131,14 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         String s = parent.getItemAtPosition(pos).toString();
-        switch (view.getId()) {
-            case R.id.team:
+        switch (parent.getId()) {
+            case R.id.teamSpinner:
                 team = s;
                 break;
-            case R.id.building:
+            case R.id.buildingSpinner:
                 building = s;
                 break;
-            case R.id.role:
+            case R.id.roleSpinner:
                 role = s;
                 break;
         }
@@ -130,51 +161,57 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         String phone = phoneEditText.getText().toString().trim();
         String password1 = password1EditText.getText().toString().trim();
         String password2 = password2EditText.getText().toString().trim();
+        Pattern pattern = Pattern.compile("\\d{3}-\\d{3}-\\d{4}");
+        Matcher matcher = pattern.matcher(phone);
         boolean validationError = false;
-        StringBuilder validationErrorMessage = new StringBuilder(getString(R.string.error_intro));
+        StringBuilder validationErrorMessage = new StringBuilder(getString(R.string.error_intro)+"\n");
         if (firstname.length() == 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_firstname));
+            validationErrorMessage.append(getString(R.string.error_blank_firstname)+"\n");
         }
         if (lastname.length() == 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_lastname));
+            validationErrorMessage.append(getString(R.string.error_blank_lastname)+"\n");
         }
         if (email.length() == 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_email));
+            validationErrorMessage.append(getString(R.string.error_blank_email)+"\n");
         }
         if (!email.contains("@")) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_invalid_email));
+            validationErrorMessage.append(getString(R.string.error_invalid_email)+"\n");
         }
         if (phone.length() == 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_phone));
+            validationErrorMessage.append(getString(R.string.error_blank_phone)+"\n");
+        }
+        if (!matcher.matches()) {
+            validationError = true;
+            validationErrorMessage.append(getString(R.string.error_invalid_phone)+"\n");
         }
         if (password1.length() == 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_password));
+            validationErrorMessage.append(getString(R.string.error_blank_password)+"\n");
         }
         if (password1.length() < 5) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_invalid_password));
+            validationErrorMessage.append(getString(R.string.error_invalid_password)+"\n");
         }
-        if (password1.equals(password2)) {
+        if (!password1.equals(password2)) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_incorrect_password));
+            validationErrorMessage.append(getString(R.string.error_incorrect_password)+"\n");
         }
         if (team == null) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_team));
+            validationErrorMessage.append(getString(R.string.error_blank_team)+"\n");
         }
         if (building == null) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_building));
+            validationErrorMessage.append(getString(R.string.error_blank_building)+"\n");
         }
         if (role == null) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_role));
+            validationErrorMessage.append(getString(R.string.error_blank_role)+"\n");
         }
 
         if (validationError) {
@@ -193,6 +230,11 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         user.setUsername(email);
         user.setPassword(password1);
         user.setEmail(email);
+        user.put("Phone", phone);
+        user.put("Team", team);
+        user.put("Building", building);
+        user.put("Role", role);
+
 
         // Call the Parse signup method
         user.signUpInBackground(new SignUpCallback() {
@@ -210,44 +252,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
                 }
             }
         });
-
-
-    }
-
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mSignUpFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mSignUpFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mSignUpFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mSignUpFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
     }
 }
 
