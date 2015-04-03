@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RapidResponse.iml" filepath="$PROJECT_DIR$/RapidResponse.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rapidresponse.iml" filepath="$PROJECT_DIR$/rapidresponse.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rapidresponse.iml" filepath="$PROJECT_DIR$/rapidresponse.iml" />
     </modules>
   </component>
 </project>
