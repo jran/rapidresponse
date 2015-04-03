@@ -1,21 +1,12 @@
 package edu.upenn.cis350.rapidresponse;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -42,9 +33,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
     private String team;
     private String building;
     private String role;
-    private View mProgressView;
-    private View mEmailSignUpFormView;
-    private View mSignUpFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +63,7 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
             @Override
             public void afterTextChanged(Editable s) {
                 System.out.println(flag);
-                if(flag == true) {
+                if(flag) {
                     String number = s.toString();
                     int i = 0;
                     while (i < number.length()) {
@@ -122,10 +110,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
                 attemptSignUp();
             }
         });
-
-        mSignUpFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
-        mEmailSignUpFormView = findViewById(R.id.email_login_form);
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,
