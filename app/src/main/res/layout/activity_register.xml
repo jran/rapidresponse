@@ -76,7 +76,7 @@
 
                 <Spinner
                     android:prompt="@string/prompt_team"
-                    android:id="@+id/team"
+                    android:id="@+id/teamSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="25pt"
                     android:background="@android:drawable/btn_dropdown"
@@ -85,7 +85,7 @@
 
                 <Spinner
                     android:prompt="@string/prompt_building"
-                    android:id="@+id/building"
+                    android:id="@+id/buildingSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="25pt"
                     android:background="@android:drawable/btn_dropdown"
@@ -93,7 +93,7 @@
 
                 <Spinner
                     android:prompt="@string/prompt_role"
-                    android:id="@+id/role"
+                    android:id="@+id/roleSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="25pt"
                     android:background="@android:drawable/btn_dropdown"
