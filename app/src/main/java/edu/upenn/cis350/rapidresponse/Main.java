@@ -66,7 +66,7 @@ public class Main extends Activity {
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        //populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -90,12 +90,11 @@ public class Main extends Activity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-
     }
 
-    private void populateAutoComplete() {
+    /*private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
-    }
+    }*/
 
 
     /**
@@ -125,7 +124,7 @@ public class Main extends Activity {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            //mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
@@ -133,6 +132,7 @@ public class Main extends Activity {
             focusView = mEmailView;
             cancel = true;
         }
+        final Context s = this;
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -144,13 +144,14 @@ public class Main extends Activity {
             // To go from one activity to another, create an Intent using the current Activity and the Class to be created
             //check login
             ParseUser.logInInBackground(email, password, new LogInCallback() {
-                public void done(ParseUser user, ParseException e) {
+
+                public void done(ParseUser user, com.parse.ParseException e) {
                     if (user != null) {
-                        if(user.getProperty<String>("Role").equals("page_operator")){
-                            Intent i = new Intent(this, CreateAlert.class);
+                        if(user.get( "Role" ).equals("page_operator")){
+                            Intent i = new Intent(s, CreateAlert.class);
                             startActivityForResult(i, 1);
                         } else {
-                            Intent i = new Intent(this, Receive_NotificationActivity.class);
+                            Intent i = new Intent(s, Receive_NotificationActivity.class);
                             startActivityForResult(i, 1);
                         }
                     }
