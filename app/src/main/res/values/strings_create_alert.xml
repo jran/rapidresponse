@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="prompt_location">Enter Location</string>
-    <string name="prompt_response_team">Select a Response Team</string>
-    <string name="prompt_description">Enter brief description</string>
-    <string name="prompt_phone_number">OPTIONAL Enter reporter's phone number</string>
-</resources>
