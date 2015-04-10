@@ -22,12 +22,6 @@ public class Application extends android.app.Application {
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-
-        // Specify a Activity to handle all pushes by default.
-        PushService.setDefaultPushCallback(this, Main.class);
 
         // Save the current installation.
         ParseInstallation.getCurrentInstallation().saveInBackground();
