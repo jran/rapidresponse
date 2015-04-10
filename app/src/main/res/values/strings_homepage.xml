@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+
+
+
+<resources>
+
+    <string-array name="location_array">
+        <item>L1</item>
+        <item>L2</item>
+        <item>L3</item>
+        <item>L4</item>
+    </string-array>
+
+
+</resources>

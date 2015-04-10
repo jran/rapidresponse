@@ -27,6 +27,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -115,7 +116,7 @@ public class Main extends Activity {
         View focusView = null;
 
 
-        // Check for a valid password, if the user entered one.
+        /*// Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
@@ -131,7 +132,7 @@ public class Main extends Activity {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
-        }
+        }*/
         final Context s = this;
 
         if (cancel) {
@@ -151,10 +152,14 @@ public class Main extends Activity {
                             Intent i = new Intent(s, CreateAlert.class);
                             startActivityForResult(i, 1);
                         } else {
-                            Intent i = new Intent(s, Receive_NotificationActivity.class);
+                            Intent i = new Intent(s, Homepage.class);
                             startActivityForResult(i, 1);
                         }
                     }
+                    if(e.getMessage().contains("invalid login parameters")){
+                        Toast.makeText(s, "Wrong email or password. Please try again!",
+                                Toast.LENGTH_LONG).show();                    }
+
                 }
             });
         }
