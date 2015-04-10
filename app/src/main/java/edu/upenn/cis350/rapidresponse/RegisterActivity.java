@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -217,6 +218,9 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         user.put("Building", building);
         user.put("Role", role);
 
+
+        ParsePush.subscribeInBackground(building);
+        ParsePush.subscribeInBackground(team);
 
         // Call the Parse signup method
         user.signUpInBackground(new SignUpCallback() {
