@@ -35,8 +35,10 @@ import com.google.android.gms.common.SignInButton;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -91,6 +93,8 @@ public class Main extends Activity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+
     }
 
     /*private void populateAutoComplete() {
