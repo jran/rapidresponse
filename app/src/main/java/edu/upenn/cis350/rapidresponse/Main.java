@@ -160,6 +160,7 @@ public class Main extends Activity {
                             startActivityForResult(i, 1);
                         }
                     }
+                    if(e == null){return;}
                     if(e.getMessage().contains("invalid login parameters")){
                         Toast.makeText(s, "Wrong email or password. Please try again!",
                                 Toast.LENGTH_LONG).show();                    }

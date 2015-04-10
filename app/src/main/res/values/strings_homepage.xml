@@ -5,10 +5,10 @@
 <resources>
 
     <string-array name="location_array">
-        <item>L1</item>
-        <item>L2</item>
-        <item>L3</item>
-        <item>L4</item>
+        <item>Location 1</item>
+        <item>Location 2</item>
+        <item>Location 3</item>
+        <item>Location 4</item>
     </string-array>
 
 
