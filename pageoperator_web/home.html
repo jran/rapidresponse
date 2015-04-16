@@ -1,0 +1,40 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Rapid Response Home</title>
+  <meta name="description" content="My Parse App">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
+</head>
+
+<body>
+
+
+  <section class="container"> 
+    <div id="signup">
+      <h1>Home</h1>
+        <nav class="rrt-nav">
+          <a class="rrt-nav-item active" href="home.html">Home</a>
+          <a class="rrt-nav-item" href="createalert.html">Create Alert</a>
+          <a class="rrt-nav-item" href="createalert.html">Active Alerts</a>
+          <a class="rrt-nav-item" href="createalert.html">Past Alerts</a>
+          <a class="rrt-nav-item">Log Out</a>
+        </nav>
+    </div>
+  </section>
+
+
+  <script type="text/javascript">
+    $(function() {
+        Parse.$ = jQuery;
+
+      Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
+    }); 
+  </script>
+</body>
+
+</html>
