@@ -20,6 +20,26 @@ h6, .h6 {
     width: 970px;
 }
 
+/*
+* Login form stuff
+*/
+.login-form {
+  max-width: 330px;
+  padding: 15px;
+}
+
+.login-form .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+
+
  /*
  * Masthead for nav
  */

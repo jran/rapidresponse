@@ -7,6 +7,7 @@
   <meta name="description" content="My Parse App">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
+  <script src="js/login.js"></script>
 
   <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -29,11 +30,11 @@
     </div>
 
     <div class="login">
-      <form class="login-form" role="form"> <!--??-->
-        <p><input type="text" name="username" placeholder="Username" required=""></p>
-        <p><input type="password" name="password" placeholder="Password" required=""></p>
+      <form class="login-form" role="form"> 
+        <input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="">
+        <input type="password" class="form-control" name="password" placeholder="Password" required="">
 
-        <button class="submit" type="submit">Sign in</button>
+        <button class="btn-block" type="submit">Sign in</button>
       </form>
     </div>
 
@@ -41,39 +42,6 @@
         <p>Forgot your password? Click here to reset it</p> <!--Does nothing as of now-->
     </div>
   </div>
-
-
-  <script type="text/javascript">
-    $(function() {
-        Parse.$ = jQuery;
-
-      Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
-    }); 
-
-    $('.form-signin').on('submit', function(e) {
-        // Prevent Default Submit Event
-        e.preventDefault();
-     
-        // Get data from the form and put them into variables
-        var data = $(this).serializeArray(),
-            username = data[0].value,
-            password = data[1].value;
-     
-        // Call Parse Login function with those variables
-        Parse.User.logIn(username, password, {
-            // If the username and password matches
-            success: function(user) {
-                alert("success");
-                window.open('home.html');
-            },
-            // If there is an error
-            error: function(user, error) {
-                alert('Failed to login. Please make sure your password and username are correct');
-            }
-        });
-    });
-
-  </script>
 </body>
 
 </html>

@@ -15,24 +15,6 @@ h6, .h6 {
 }
 
 
-/*
-* Login form stuff
-*/
-.signup-form {
-  max-width: 330px;
-  padding: 15px;
-}
-
-.signup-form .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-
 .container {
     padding-top:5px;
     width: 970px;
@@ -41,7 +23,7 @@ h6, .h6 {
  /*
  * Masthead for nav
  */
-.login-navigation {
+.rrt-navigation {
   background-color: #428bca;
   -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
           box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
@@ -62,10 +44,10 @@ h6, .h6 {
 }
 
 /* Active state gets a caret at the bottom */
-.login-nav .active {
+.rrt-nav .active {
   color: #fff;
 }
-.login-nav .active:after {
+.rrt-nav .active:after {
   position: absolute;
   bottom: 0;
   left: 50%;

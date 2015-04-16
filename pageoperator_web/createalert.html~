@@ -9,12 +9,28 @@
   <link rel="stylesheet" href="css/styles.css">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
+
+    <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/home.css" rel="stylesheet">
 </head>
 
 <script type="text/javaScript" src="alert.js"></script>
 
 
 <body>
+	<div class="rrt-navigation">
+      <div class="container">
+        <nav class="rrt-nav">
+          <a class="nav-item active" href="#">Home</a>
+          <a class="nav-item" href="createalert.html">Create Alert</a>
+          <a class="nav-item" href="#">Past Alerts</a>
+          <a class="nav-item" href="#">On Duty</a>
+          <a class="nav-item" href="#">Log Out</a>
+        </nav>
+      </div>
+    </div>
+
   <section class="container"> 
     <div id="login">
       <h1>Alert RRT</h1>
