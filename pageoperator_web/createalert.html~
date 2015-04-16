@@ -1,0 +1,140 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Rapid Response: Create Alert</title>
+  <meta name="description" content="My Parse App">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
+</head>
+
+<script language="JavaScript">
+function toggle(source) {
+  checkboxes = document.getElementsByName('building');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+function roles(selection){ 
+   switch(selection){
+       case 'medical':
+         medical = document.getElementsByValue('medicine');
+         medical.checked = source.checked;
+			pharmacist = document.getElementsByValue('pharmacist');
+         pharmacist.checked = source.checked;
+			ccops = document.getElementsByValue('CCOPS');
+         ccops.checked = source.checked;
+		   respiratory = document.getElementsByValue('respiratory');
+			respiratory.checked = source.checked;
+		   coordinator = document.getElementsByValue('coordinator');
+		   coordinator.checked = source.checked;
+       case 'surgical':
+			surgical = document.getElementsByValue('surgical');
+			surgical.checked = source.checked;
+		   pharmacist = document.getElementsByValue('pharmacist');
+		   pharmacist.checked = source.checked;
+			ccops = document.getElementsByValue('CCOPS');
+			ccops.checked = source.checked;
+			respiratory = document.getElementsByValue('respiratory');
+			respiratory.checked = source.checked;
+			coordinator = document.getElementsByValue('coordinator');
+			coordinator.checked = source.checked;
+         break;
+       case 'anesthesia':
+			anesthesia = document.getElementsByValue('anesthesia');
+			anesthesia.checked = source.checked;
+			respiratory = document.getElementsByValue('respiratory');
+			respiratory.checked = source.checked;
+         break;
+       case 'code':
+			checkboxes = document.getElementsByName('role');
+			for(var i=0, n=checkboxes.length;i<n;i++) {
+				checkboxes[i].checked = source.checked;
+			}
+         break;
+       case 'airway':
+         anesthesia = document.getElementsByValue('anesthesia');
+			anesthesia.checked = source.checked;
+			respiratory = document.getElementsByValue('respiratory');
+         respiratory.checked = source.checked;
+         surgical = document.getElementsByValue('surgical');
+         surgical.checked = source.checked;
+         break;
+   }
+}
+</script>
+
+
+<body>
+  <section class="container"> 
+    <div id="login">
+      <h1>Alert RRT</h1>
+      <form class="form-alert" role="form"> <!--??-->
+	<p>Location</p>
+	<input type="checkbox" onClick="toggle(this)" /> All<br/>
+	<input type="checkbox" name="building" value="founders"> Founders<br/>
+	<input type="checkbox" name="building" value="rhoads"> Rhoads<br/>
+	<input type="checkbox" name="building" value="silverstein"> Silvertstein<br/>
+	<p><input type="text" name="room" placeholder="Room Number"></p>
+	<p> Types of Emergencies</p>
+	<select name="emergenceType" onChang="roles(this)">
+	  <option value="medical">Medical Rapid Response</option>
+	  <option value="surgical">Surgical Rapid Response</option>
+	  <option value="anesthesia">Anesthesia Stat</option>
+	  <option value="code">Code Call</option>
+	  <option value="airway">Airway Emergency</option>
+	</select>
+	<p> Details </p>
+        <p><textarea name="description" rows="5" cols="80" placeholder="Enter Description (Optional)"></textarea></p>
+	<p><input type="tel" name="phone" placeholder="Phone number for contact"></p>
+	 <p> Roles </p>
+	 <input type="checkbox" name="role" value="medicine"> Medicine Resident<br/>
+	 <input type="checkbox" name="role" value="surgical"> Surgical Resident<br/>
+	 <input type="checkbox" name="role" value="pharmacist"> Pharmacist<br/>
+	 <input type="checkbox" name="role" value="CCOPS"> CCOPS <br/>
+	 <input type="checkbox" name="role" value="respiratory"> Respiratory Therapy<br/>
+	 <input type="checkbox" name="role" value="coordinator"> Coordinator<br/>
+	 <input type="checkbox" name="role" value="anethesia"> Anethesia<br/>
+	 <input type="checkbox" name="role" value="Other"> Other<br/>
+        <button class="submit" type="submit">Send Alert</button>
+      </form>
+    </div>
+
+  </section>
+
+
+  <script type="text/javascript">
+    $(function() {
+        Parse.$ = jQuery;
+
+      Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
+    }); 
+
+    $('.form-alert').on('submit', function(e) {
+        // Prevent Default Submit Event
+        e.preventDefault();
+     
+        // Get data from the form and put them into variables
+        var data = $(this).serializeArray(),
+            location = data[0].value,
+            description = data[1].value;
+     
+        // Call Parse Login function with those variables
+        /*Parse.User.logIn(username, password, {
+            // If the username and password matches
+            success: function(user) {
+                alert('Welcome!');
+            },
+            // If there is an error
+            error: function(user, error) {
+                alert('Failed to login. Please make sure your password and username are correct');
+            }
+        });*/
+    });
+  </script>
+</body>
+
+</html>
