@@ -1,3 +1,44 @@
+window.onload=function(){
+   document.getElementsByName('medicine')[0].checked=true;
+	document.getElementsByName('pharmacist')[0].checked=true;
+	document.getElementsByName('CCOPS')[0].checked=true;
+	document.getElementsByName('respiratory')[0].checked=true;
+	document.getElementsByName('coordinator')[0].checked=true;
+  
+   document.getElementById('form-alert').onsubmit=function() {
+      var location = document.getElementsByName('building');
+      var room = document.getElementById('room').value;
+      var emergencyType = document.getElementById('emergencyType').value;
+      var details = document.getElementById('description').value;
+      var phone = document.getElementById('phone').value;
+      Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
+      var query = new Parse.Query(Parse.Installation);
+      Parse.Push.send({
+         where: query,
+         data: {
+            alert: emergencyType + " in "+room+". Details: "+details+"\n Contact:"+phone,
+            emergencyType: emergencyType,
+            room: room,
+            details: details,
+            phone: phone,
+            sound: "cheering.caf"
+         }
+      }, {
+         success: function(){
+            console.log("Push was successful");
+         },
+         error: function(error){
+            console.log("Error: "+error.value);
+         }
+   
+      });
+      alert("Form Submitted. Send a new one?");
+      return false;
+   }
+
+}
+
+
 function toggle(source) {
   checkboxes = document.getElementsByName('building');
   for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -15,7 +56,7 @@ function roles(s){
 	coordinator = document.getElementsByName('coordinator');
    
    switch(selection){
-       case 'medical':
+       case 'Medical Rapid Response':
          medical[0].checked = true;
 			surgical[0].checked = false;
          pharmacist[0].checked = true;
@@ -24,7 +65,7 @@ function roles(s){
 			anesthesia[0].checked = false;
 		   coordinator[0].checked = true;
          break;
-       case 'surgical':
+       case 'Surgical Rapid Response':
          medical[0].checked = false;
 			surgical[0].checked = true;
          pharmacist[0].checked = true;
@@ -33,7 +74,7 @@ function roles(s){
 			anesthesia[0].checked = false;
 		   coordinator[0].checked = true;
          break;
-       case 'anesthesia':
+       case 'Anesthesia Stat':
          medical[0].checked = false;
 			surgical[0].checked = false;
          pharmacist[0].checked = false;
@@ -42,7 +83,7 @@ function roles(s){
 			anesthesia[0].checked = true;
 		   coordinator[0].checked = false;
          break;
-       case 'code':
+       case 'Code Call':
          medical[0].checked = true;
 			surgical[0].checked = true;
          pharmacist[0].checked = true;
@@ -51,7 +92,7 @@ function roles(s){
 			anesthesia[0].checked = true;
 		   coordinator[0].checked = true;
          break;
-       case 'airway':
+       case 'Airway Emergency':
          medical[0].checked = false;
 			surgical[0].checked = true;
          pharmacist[0].checked = false;
@@ -61,37 +102,4 @@ function roles(s){
 		   coordinator[0].checked = false;
          break;
    }
-}
-function submit(){
-   console.log("submit works");
-   location = document.getElementsByName('building');
-   room = document.getElementsByName('room');
-   emergencyType = document.getElementsByName('emergencyType').value;
-   details = document.getElementsByName('description').value;
-   phone = document.getElementsByName('phone').value;
-   
-   Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
-   var query = new Parse.Query(Parse.Installation);
-   Parse.Push.send({
-      where: query,
-      data: {
-         alert: emergencyType + " in " + room + ". Details: "+ details +"\nContact: "+phone,
-         emergency: emergencyType,
-         room: room,
-         details: details,
-         contact: phone,
-         sound: "cheering.caf",
-         title: "Rapid Response!"
-      }
-   }, {
-      success: function(){
-         //push was successful
-      },
-      error: function(error){
-         //Handle error
-      }
-   
-   });
-  
-
 }

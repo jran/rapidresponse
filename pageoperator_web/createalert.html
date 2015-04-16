@@ -30,26 +30,26 @@
     </div>
 
   <section class="container"> 
-    <div id="login">
+    <div>
       <h1>Alert RRT</h1>
-      <form class="form-alert" role="form"> <!--??-->
+      <form id="form-alert" role="form" method="post"> <!--??-->
 	<p>Location</p>
 	<input type="checkbox" onClick="toggle(this)" /> All<br/>
 	<input type="checkbox" name="building" value="founders"> Founders<br/>
 	<input type="checkbox" name="building" value="rhoads"> Rhoads<br/>
 	<input type="checkbox" name="building" value="silverstein"> Silvertstein<br/>
-	<p><input type="text" name="room" placeholder="Room Number"></p>
+	<p><input type="text" id="room" placeholder="Room Number"></p>
 	<p> Types of Emergencies</p>
-	<select name="emergencyType" onchange="roles(this)">
-	  <option value="medical">Medical Rapid Response</option>
-	  <option value="surgical">Surgical Rapid Response</option>
-	  <option value="anesthesia">Anesthesia Stat</option>
-	  <option value="code">Code Call</option>
-	  <option value="airway">Airway Emergency</option>
+	<select id="emergencyType" onchange="roles(this)">
+	  <option value="Medical Rapid Response">Medical Rapid Response</option>
+	  <option value="Surgical Rapid Response">Surgical Rapid Response</option>
+	  <option value="Anesthesia Stat">Anesthesia Stat</option>
+	  <option value="Code Call">Code Call</option>
+	  <option value="Airway Emergency">Airway Emergency</option>
 	</select>
 	<p> Details </p>
-        <p><textarea name="description" rows="5" cols="80" placeholder="Enter Description (Optional)"></textarea></p>
-	<p><input type="tel" name="phone" placeholder="Phone number for contact"></p>
+        <p><textarea id="description" rows="5" cols="80" placeholder="Enter Description (Optional)"></textarea></p>
+	<p><input type="tel" id="phone" placeholder="Phone number for contact"></p>
 	 <p> Roles </p>
 	 <input type="checkbox" name="medicine"> Medicine Resident<br/>
 	 <input type="checkbox" name="surgical"> Surgical Resident<br/>
@@ -59,7 +59,7 @@
 	 <input type="checkbox" name="coordinator"> Coordinator<br/>
 	 <input type="checkbox" name="anesthesia"> Anethesia<br/>
 	 <input type="checkbox" name="Other"> Other<br/>
-    <button class="submit" type="submit" onClick="submit">Send Alert</button>
+    <button class="submit" type="submit">Send Alert</button>
       </form>
     </div>
 
