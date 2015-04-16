@@ -1,21 +1,35 @@
 <!doctype html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
 
   <title>Rapid Response Login</title>
   <meta name="description" content="My Parse App">
-  <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/styles.css">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/login.css" rel="stylesheet">
 </head>
 
 <body>
-  <section class="container"> 
-    <div id="login">
-      <h1>Login to RapidResponse</h1>
-      <form class="form-signin" role="form"> <!--??-->
+    <div class="login-navigation">
+      <div class="container">
+        <nav class="login-nav">
+          <a class="nav-item active" href="#">Login</a>
+          <a class="nav-item" href="signup.html">Signup</a>
+        </nav>
+      </div>
+    </div>
+
+  <div class="container"> 
+    <div class="login-header">
+        <h1 class="login-title">Rapid Response: Login</h1>
+    </div>
+
+    <div class="login">
+      <form class="login-form" role="form"> <!--??-->
         <p><input type="text" name="username" placeholder="Username" required=""></p>
         <p><input type="password" name="password" placeholder="Password" required=""></p>
 
@@ -26,7 +40,7 @@
     <div class="login-help">
         <p>Forgot your password? Click here to reset it</p> <!--Does nothing as of now-->
     </div>
-  </section>
+  </div>
 
 
   <script type="text/javascript">

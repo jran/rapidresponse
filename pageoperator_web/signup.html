@@ -1,32 +1,46 @@
 <!doctype html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
 
   <title>Rapid Response Signup</title>
   <meta name="description" content="My Parse App">
-  <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/styles.css">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/signup.css" rel="stylesheet">
 </head>
 
 <body>
-  <section class="container"> 
-    <div id="signup">
-      <h1>Login to RapidResponse</h1>
-      <form class="form-signup" role="form"> <!--??-->
+  <div class="login-navigation">
+      <div class="container">
+        <nav class="login-nav">
+          <a class="nav-item" href="login.html">Login</a>
+          <a class="nav-item active" href="#">Signup</a>
+        </nav>
+      </div>
+  </div>
+
+  <div class="container"> 
+    <div class="header">
+      <h1 class="title">Rapid Response: Signup</h1>
+    </div>
+
+    <div class="signup">
+      <form class="form-signup" role="form">
         <p><input type="text" name="username" placeholder="Username" required=""></p>
         <p><input type="password" name="password" placeholder="Password" required=""></p>
         <p><input type="password2" name="password2" placeholder="Reenter Password" required=""></p>
         <button class="submit" type="submit">Sign in</button>
       </form>
-    </div>
 
-    <div class="login-help">
-        <p>Already a user? Login here: </p> <!--Does nothing as of now-->
+      <div class="login-help">
+          <p>Already a user? Login here: </p> <!--Does nothing as of now-->
+      </div>
     </div>
-  </section>
+  </div>
 
 
   <script type="text/javascript">
