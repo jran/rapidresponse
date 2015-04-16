@@ -62,31 +62,36 @@ function roles(s){
          break;
    }
 }
+function submit(){
+   console.log("submit works");
+   location = document.getElementsByName('building');
+   room = document.getElementsByName('room');
+   emergencyType = document.getElementsByName('emergencyType').value;
+   details = document.getElementsByName('description').value;
+   phone = document.getElementsByName('phone').value;
+   
+   Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
+   var query = new Parse.Query(Parse.Installation);
+   Parse.Push.send({
+      where: query,
+      data: {
+         alert: emergencyType + " in " + room + ". Details: "+ details +"\nContact: "+phone,
+         emergency: emergencyType,
+         room: room,
+         details: details,
+         contact: phone,
+         sound: "cheering.caf",
+         title: "Rapid Response!"
+      }
+   }, {
+      success: function(){
+         //push was successful
+      },
+      error: function(error){
+         //Handle error
+      }
+   
+   });
+  
 
-$(function() {
-        Parse.$ = jQuery;
-
-      Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
-    }); 
-
-    $('.form-alert').on('submit', function(e) {
-        // Prevent Default Submit Event
-        e.preventDefault();
-     
-        // Get data from the form and put them into variables
-        var data = $(this).serializeArray(),
-            location = data[0].value,
-            description = data[1].value;
-     
-        // Call Parse Login function with those variables
-        /*Parse.User.logIn(username, password, {
-            // If the username and password matches
-            success: function(user) {
-                alert('Welcome!');
-            },
-            // If there is an error
-            error: function(user, error) {
-                alert('Failed to login. Please make sure your password and username are correct');
-            }
-        });*/
-    });
+}

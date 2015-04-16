@@ -26,7 +26,7 @@
 	<input type="checkbox" name="building" value="silverstein"> Silvertstein<br/>
 	<p><input type="text" name="room" placeholder="Room Number"></p>
 	<p> Types of Emergencies</p>
-	<select name="emergenceType" onchange="roles(this)">
+	<select name="emergencyType" onchange="roles(this)">
 	  <option value="medical">Medical Rapid Response</option>
 	  <option value="surgical">Surgical Rapid Response</option>
 	  <option value="anesthesia">Anesthesia Stat</option>
@@ -45,7 +45,7 @@
 	 <input type="checkbox" name="coordinator"> Coordinator<br/>
 	 <input type="checkbox" name="anesthesia"> Anethesia<br/>
 	 <input type="checkbox" name="Other"> Other<br/>
-    <button class="submit" type="submit">Send Alert</button>
+    <button class="submit" type="submit" onClick="submit">Send Alert</button>
       </form>
     </div>
 
