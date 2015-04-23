@@ -6,34 +6,58 @@ window.onload=function(){
 	document.getElementsByName('coordinator')[0].checked=true;
   
    document.getElementById('form-alert').onsubmit=function() {
+      event.preventDefault();
       var location = document.getElementsByName('building');
+      var buildings = "";
+      for (var i=0, n=location.length; i<n; i++){
+	  buildings = buildings + location[i].value +",";
+      }
       var room = document.getElementById('room').value;
       var emergencyType = document.getElementById('emergencyType').value;
       var details = document.getElementById('description').value;
       var phone = document.getElementById('phone').value;
       Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
-      var query = new Parse.Query(Parse.Installation);
-      Parse.Push.send({
-         where: query,
-         data: {
-            alert: emergencyType + " in "+room+". Details: "+details+"\n Contact:"+phone,
-            emergencyType: emergencyType,
-            room: room,
-            details: details,
-            phone: phone,
-            sound: "cheering.caf"
-         }
-      }, {
-         success: function(){
-            console.log("Push was successful");
-         },
-         error: function(error){
-            console.log("Error: "+error.value);
-         }
+
+      var NewAlert = Parse.Object.extend("Alert");
+      var newAlert = new NewAlert();
+      newAlert.set("Description", details);
+      newAlert.set("Location", room);
+      newAlert.set("Building", buildings);
+      newAlert.set("EmergencyType", emergencyType);
+      newAlert.set("Phone", phone);
+      newAlert.save(null, {
+	  success: function(al) {
+	      console.log(al.id+" saved successfully");
+	      // The object was saved successfully.
+	      // send push notification
+	      var query = new Parse.Query(Parse.Installation);
+	      Parse.Push.send({
+		  where: query,
+		  data: {
+		      alert: emergencyType + " in "+room+". Details: "+details+"\n Contact:"+phone,
+		      ObjectID: al.id,
+		      sound: "cheering.caf"
+		  }
+	      }, {
+		  success: function(){
+		      console.log("Push was successful");
+		  },
+		  error: function(error){
+		      console.log("Error: "+error.value);
+		  }
    
+	      });
+	      alert("Form Submitted. Send a new one?");	      return false;
+
+	      
+	  },
+	  error: function(al, error) {
+	      console.log(error.message);
+	      // The save failed.
+	      // error is a Parse.Error with an error code and message.
+	  }
       });
-      alert("Form Submitted. Send a new one?");
-      return false;
+      
    }
 
 }
