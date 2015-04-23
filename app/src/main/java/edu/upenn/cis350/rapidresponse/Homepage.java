@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
+import com.parse.ParseUser;
+
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -114,20 +116,6 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
 
     public void onLogoutButtonClick(View view){
         Intent i = new Intent(this, Main.class);
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.getInBackground(USER, new GetCallback<ParseObject>() {
-
-            public void done(ParseObject object, ParseException e) {
-                if (e == null) {
-                    object.put("LoggedIn", false);
-                } else {
-                    Log.d("Logging Out", e.getMessage());
-                }
-            }
-        });
-
-
         startActivityForResult(i, 1);
         ParseUser.logOut();
     }

@@ -46,7 +46,6 @@ import com.parse.ParsePush;
 import com.parse.PushService;
 import com.parse.SaveCallback;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +59,7 @@ import java.util.List;
  * https://developers.google.com/+/mobile/android/getting-started#step_1_enable_the_google_api
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
+@TargetApi(11)
 public class Main extends Activity implements LoaderCallbacks<Cursor>{
     public final static String USER = "com.mycompany.myfirstapp.MESSAGE";
 
@@ -86,13 +86,9 @@ public class Main extends Activity implements LoaderCallbacks<Cursor>{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //redirect logged in users to the homepage
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            final Context s = this;
-            Intent i = new Intent(s, Homepage.class);
-            startActivityForResult(i, 1);
-        }
+
+
+
 
         //creates view
         super.onCreate(savedInstanceState);
@@ -121,6 +117,15 @@ public class Main extends Activity implements LoaderCallbacks<Cursor>{
                 }
             }
         });*/
+
+        //redirect logged in users to the homepage
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            final Context s = this;
+            Intent i = new Intent(s, Homepage.class);
+            i.putExtra(USER, currentUser.getObjectId());
+            startActivityForResult(i, 1);
+        }
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -188,14 +193,14 @@ public class Main extends Activity implements LoaderCallbacks<Cursor>{
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            mEmailView.setError(("Error: field required"));
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
-        }*/
+        }
         final Context s = this;
 
         if (cancel) {
@@ -276,8 +281,11 @@ public class Main extends Activity implements LoaderCallbacks<Cursor>{
                 ConnectionResult.SUCCESS;
     }
 
+
     @Override
+    @TargetApi(11)
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+
         return new CursorLoader(this,
                 // Retrieve data rows for the device user's 'profile' contact.
                 Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
