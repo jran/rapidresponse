@@ -38,11 +38,3 @@ body {
     color: green;
     line-height: 13px;
 }
-
-.container {
-        width: 500px;
-        clear: both;
-	margin: auto;
-	text-align: left;
-	padding: 50px 60px
-    }

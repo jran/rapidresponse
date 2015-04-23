@@ -129,6 +129,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
 
 
         startActivityForResult(i, 1);
+        ParseUser.logOut();
     }
 
     public void onButtonClick(View view){

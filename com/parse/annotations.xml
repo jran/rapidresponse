@@ -1,0 +1,5 @@
+<root>
+    <item name='com.parse.SaveCallback'>
+        <annotation name='java.lang.annotation.Deprecated' />
+    </item>
+</root>

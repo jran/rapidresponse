@@ -5,10 +5,12 @@
   <title>Rapid Response: Create Alert</title>
   <meta name="description" content="My Parse App">
   <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
 
-      <!-- Bootstrap -->
+    <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/home.css" rel="stylesheet">
 </head>
@@ -20,8 +22,8 @@
 	<div class="rrt-navigation">
       <div class="container">
         <nav class="rrt-nav">
-          <a class="nav-item" href="home.html">Home</a>
-          <a class="nav-item active" href="#">Create Alert</a>
+          <a class="nav-item active" href="#">Home</a>
+          <a class="nav-item" href="createalert.html">Create Alert</a>
           <a class="nav-item" href="#">Past Alerts</a>
           <a class="nav-item" href="#">On Duty</a>
           <a class="nav-item" href="#">Log Out</a>
@@ -30,26 +32,26 @@
     </div>
 
   <section class="container"> 
-    <div>
+    <div id="login">
       <h1>Alert RRT</h1>
-      <form id="form-alert" role="form" method="post"> <!--??-->
+      <form class="form-alert" role="form"> <!--??-->
 	<p>Location</p>
 	<input type="checkbox" onClick="toggle(this)" /> All<br/>
 	<input type="checkbox" name="building" value="founders"> Founders<br/>
 	<input type="checkbox" name="building" value="rhoads"> Rhoads<br/>
 	<input type="checkbox" name="building" value="silverstein"> Silvertstein<br/>
-	<p><input type="text" id="room" placeholder="Room Number"></p>
+	<p><input type="text" name="room" placeholder="Room Number"></p>
 	<p> Types of Emergencies</p>
-	<select id="emergencyType" onchange="roles(this)">
-	  <option value="Medical Rapid Response">Medical Rapid Response</option>
-	  <option value="Surgical Rapid Response">Surgical Rapid Response</option>
-	  <option value="Anesthesia Stat">Anesthesia Stat</option>
-	  <option value="Code Call">Code Call</option>
-	  <option value="Airway Emergency">Airway Emergency</option>
+	<select name="emergencyType" onchange="roles(this)">
+	  <option value="medical">Medical Rapid Response</option>
+	  <option value="surgical">Surgical Rapid Response</option>
+	  <option value="anesthesia">Anesthesia Stat</option>
+	  <option value="code">Code Call</option>
+	  <option value="airway">Airway Emergency</option>
 	</select>
 	<p> Details </p>
-        <p><textarea id="description" rows="5" cols="80" placeholder="Enter Description (Optional)"></textarea></p>
-	<p><input type="tel" id="phone" placeholder="Phone number for contact"></p>
+        <p><textarea name="description" rows="5" cols="80" placeholder="Enter Description (Optional)"></textarea></p>
+	<p><input type="tel" name="phone" placeholder="Phone number for contact"></p>
 	 <p> Roles </p>
 	 <input type="checkbox" name="medicine"> Medicine Resident<br/>
 	 <input type="checkbox" name="surgical"> Surgical Resident<br/>
@@ -59,7 +61,7 @@
 	 <input type="checkbox" name="coordinator"> Coordinator<br/>
 	 <input type="checkbox" name="anesthesia"> Anethesia<br/>
 	 <input type="checkbox" name="Other"> Other<br/>
-    <button class="submit" type="submit">Send Alert</button>
+    <button class="submit" type="submit" onClick="submit">Send Alert</button>
       </form>
     </div>
 
