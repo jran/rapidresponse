@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.parse.Parse;
+import com.parse.ParseUser;
 
 /**
  * Created by elianamason on 4/9/15.
@@ -48,6 +49,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
     public void onLogoutButtonClick(View view){
         Intent i = new Intent(this, Main.class);
         startActivityForResult(i, 1);
+        ParseUser.logOut();
     }
 
 

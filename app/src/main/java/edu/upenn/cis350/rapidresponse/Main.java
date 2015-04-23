@@ -64,6 +64,15 @@ public class Main extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //redirect logged in users to the homepage
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            final Context s = this;
+            Intent i = new Intent(s, Homepage.class);
+            startActivityForResult(i, 1);
+        }
+
+        //creates view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 

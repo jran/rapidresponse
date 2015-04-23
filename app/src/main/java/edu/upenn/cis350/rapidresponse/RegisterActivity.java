@@ -208,6 +208,13 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         dialog.setMessage(getString(R.string.progress_signup));
         dialog.show();
 
+        //clear log out old user
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            Toast.makeText(RegisterActivity.this, "Logging current user out", Toast.LENGTH_LONG);
+            ParseUser.logOut();
+        }
+
         // Set up a new Parse user
         ParseUser user = new ParseUser();
         user.setUsername(email);
