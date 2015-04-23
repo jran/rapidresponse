@@ -54,7 +54,7 @@ import java.util.List;
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
 public class Main extends Activity {
-
+    public final static String USER = "com.mycompany.myfirstapp.MESSAGE";
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -157,6 +157,8 @@ public class Main extends Activity {
                             startActivityForResult(i, 1);
                         } else {
                             Intent i = new Intent(s, Homepage.class);
+                            i.putExtra(USER, user.getObjectId());
+                            user.put("LoggedIn",true);
                             startActivityForResult(i, 1);
                         }
                     }

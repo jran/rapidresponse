@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Emergency Details"
+        android:id="@+id/emerg_header"
+        android:layout_weight="0.17" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Description"
+        android:id="@+id/description"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.04" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/details"
+        android:layout_weight="0.14" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Building"
+        android:id="@+id/build"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.04" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/building"
+        android:layout_weight="0.04" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Location"
+        android:id="@+id/loc"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.04" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/location_id"
+        android:layout_weight="0.04" />
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Time Created:"
+        android:id="@+id/create_time"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.04" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/time"
+        android:layout_weight="0.05" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="For more information, call:"
+        android:id="@+id/contact"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.04" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/phone_num"
+        android:layout_weight="0.08" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Return"
+        android:id="@+id/button"
+        android:onClick="onReturnClick"
+        android:layout_weight="0.07" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.17"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="149dp"
+            android:layout_height="match_parent"
+            android:text="Incapacitated!"
+            android:id="@+id/decline"
+            android:background="#ffff6d66"
+            android:onClick="onDeclineButtonClick" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Accept"
+            android:id="@+id/accept"
+            android:background="#ffaeff96"
+            android:onClick="onAcceptButtonClick" />
+    </LinearLayout>
+
+</LinearLayout>
