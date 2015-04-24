@@ -5,14 +5,11 @@
 <resources>
 
     <string-array name="location_array">
-        <item>Founders</item>
-        <item>Pereleman Center</item>
-        <item>Rhoads</item>
-        <item>Silverstein</item>
-        <item>All</item>
+        <item>Location 1</item>
+        <item>Location 2</item>
+        <item>Location 3</item>
+        <item>Location 4</item>
     </string-array>
-    <item type = "id"
-        name="unique_id"/>
 
 
 </resources>

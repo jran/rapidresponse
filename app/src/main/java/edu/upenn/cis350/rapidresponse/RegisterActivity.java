@@ -87,18 +87,17 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
             }
         });
         Spinner teamSpinner = (Spinner)findViewById(R.id.teamSpinner);
-        String[] items = new String[]{"Medical Rapid Response", "Surgical Rapid Response", "OB Emergency", "Anesthesia Stat", "Code Call", "Airway Emergency"};
+        String[] items = new String[]{"team 1", "team 2", "team 3"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         teamSpinner.setAdapter(adapter);
         teamSpinner.setOnItemSelectedListener(this);
         Spinner buildingSpinner = (Spinner)findViewById(R.id.buildingSpinner);
-        items = new String[]{"Founders", "Pereleman Center", "Rhoads", "Silverstein"};
+        items = new String[]{"building 1", "building 2", "building 3"};
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         buildingSpinner.setAdapter(adapter);
         buildingSpinner.setOnItemSelectedListener(this);
         Spinner roleSpinner = (Spinner)findViewById(R.id.roleSpinner);
-        items = new String[]{"Medicine Resident", "Surgical Resident", "OB Resident", "Pharmacist",
-            "CCOPS", "Respiratory Therapy", "Coordinator", "Anesthesia", "Other"};
+        items = new String[]{"role 1", "role 2", "role 3"};
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         roleSpinner.setAdapter(adapter);
         roleSpinner.setOnItemSelectedListener(this);
@@ -208,13 +207,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         final ProgressDialog dialog = new ProgressDialog(RegisterActivity.this);
         dialog.setMessage(getString(R.string.progress_signup));
         dialog.show();
-
-        //clear log out old user
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            Toast.makeText(RegisterActivity.this, "Logging current user out", Toast.LENGTH_LONG);
-            ParseUser.logOut();
-        }
 
         // Set up a new Parse user
         ParseUser user = new ParseUser();
