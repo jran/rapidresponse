@@ -8,8 +8,9 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Login"
-        android:id="@+id/edit_login_button" />
+        android:text="Edit Your Information"
+        android:id="@+id/edit"
+        android:onClick="onEditButtonClick"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"

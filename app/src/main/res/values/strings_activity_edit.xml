@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_save">Save</string>
+    <string name="action_return">Return</string>
+    <string name="action_delete">Delete</string>
+    <string name="prompt_old_password">Password (required for changes)</string>
+    <string name="prompt_new_password">Edit Password (minimum 5 characters)</string>
+    <string name="prompt_new_email">Edit Email</string>
+    <string name="prompt_new_first_name">Edit First Name</string>
+    <string name="prompt_new_last_name">Edit Last Name</string>
+    <string name="prompt_new_cellphone">Edit Hospital Cellphone Number</string>
+    <string name="prompt_new_team">Edit Rapid Response Team</string>
+    <string name="prompt_new_building">Edit Hospital Building</string>
+    <string name="prompt_new_role">Edit Role</string>
+    <string name="progress_update">Updating Account</string>
+    <string name="progress_delete">Deleting Account</string>
+</resources>

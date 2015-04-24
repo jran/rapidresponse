@@ -16,35 +16,24 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
-import com.parse.FindCallback;
-import com.parse.LogInCallback;
 import com.parse.Parse;
-import com.parse.ParsePush;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.PushService;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,10 +75,6 @@ public class Main extends Activity implements LoaderCallbacks<Cursor>{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
-
         //creates view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -121,8 +106,7 @@ public class Main extends Activity implements LoaderCallbacks<Cursor>{
         //redirect logged in users to the homepage
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            final Context s = this;
-            Intent i = new Intent(s, Homepage.class);
+            Intent i = new Intent(this, Homepage.class);
             i.putExtra(USER, currentUser.getObjectId());
             startActivityForResult(i, 1);
         }
@@ -352,6 +336,20 @@ public class Main extends Activity implements LoaderCallbacks<Cursor>{
             mPassword = password;
         }
 
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mAuthTask = null;
+            showProgress(false);
+
+            if (success) {
+                finish();
+            } else {
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+            }
+        }
+
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
@@ -373,19 +371,6 @@ public class Main extends Activity implements LoaderCallbacks<Cursor>{
 
             // TODO: register the new account here.
             return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
         }
 
         @Override

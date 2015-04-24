@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
@@ -21,11 +20,7 @@ import com.parse.ParseQuery;
 
 import com.parse.ParseException;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by elianamason on 4/9/15.
@@ -118,6 +113,11 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         Intent i = new Intent(this, Main.class);
         startActivityForResult(i, 1);
         ParseUser.logOut();
+    }
+
+    public void onEditButtonClick(View view){
+        Intent i = new Intent(this, EditActivity.class);
+        startActivityForResult(i, 1);
     }
 
     public void onButtonClick(View view){

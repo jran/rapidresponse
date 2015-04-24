@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.parse.Parse;
+
 import com.parse.ParseException;
 import com.parse.ParsePush;
 import com.parse.ParseUser;
@@ -221,6 +221,8 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         user.setUsername(email);
         user.setPassword(password1);
         user.setEmail(email);
+        user.put("FirstName", firstname);
+        user.put("LastName", lastname);
         user.put("Phone", phone);
         user.put("Team", team);
         user.put("Building", building);
@@ -229,6 +231,7 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
 
         ParsePush.subscribeInBackground(building);
         ParsePush.subscribeInBackground(team);
+        ParsePush.subscribeInBackground(role);
 
         // Call the Parse signup method
         user.signUpInBackground(new SignUpCallback() {
