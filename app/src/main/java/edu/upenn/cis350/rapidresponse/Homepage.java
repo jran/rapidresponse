@@ -29,7 +29,7 @@ import java.util.Set;
  * Created by elianamason on 4/9/15.
  */
 public class Homepage extends Activity implements AdapterView.OnItemSelectedListener {
-    public static String USER = null;
+    public final ParseUser user = null; 
     public final static String EMERG_ID = "edu.upenn.cis350.rapidresponse.MESSAGE";
     String location = null;
 
@@ -38,11 +38,17 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
 
-        Intent intent = getIntent();
-        USER = intent.getStringExtra(Main.USER);
-
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
-
+        
+        ParseUser curruser = ParseUser.getCurrentUser();
+        if (user != null) {
+            user = curruser; 
+        }
+        else{
+            Intent i = new Intent(this, Main.class); 
+            startActivity(i,1); 
+        }
+        
         Spinner spinner = (Spinner) findViewById(R.id.location_info);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -114,20 +120,8 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
 
     public void onLogoutButtonClick(View view){
         Intent i = new Intent(this, Main.class);
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.getInBackground(USER, new GetCallback<ParseObject>() {
-
-            public void done(ParseObject object, ParseException e) {
-                if (e == null) {
-                    object.put("LoggedIn", false);
-                } else {
-                    Log.d("Logging Out", e.getMessage());
-                }
-            }
-        });
-
-
+        user.logout(); 
+        
         startActivityForResult(i, 1);
     }
 
@@ -137,7 +131,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         String emergency_id =(String) view.getTag(R.id.unique_id);
         //String message = "EMERG_ID";
         intent.putExtra(EMERG_ID,emergency_id);
-        intent.putExtra(USER,USER);
+;
         startActivity(intent);
     }
 
