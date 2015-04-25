@@ -141,13 +141,8 @@ public class Main extends Activity {
 
                 public void done(ParseUser user, com.parse.ParseException e) {
                     if (user != null) {
-                        if (user.get("Role").equals("page_operator")) {
-                            Intent i = new Intent(s, CreateAlert.class);
-                            startActivityForResult(i, 1);
-                        } else {
-                            Intent i = new Intent(s, Homepage.class);
-                            startActivityForResult(i, 1);
-                        }
+                        Intent i = new Intent(s, Homepage.class);
+                        startActivityForResult(i, 1);
                     }
                     if (e == null) {
                         return;
@@ -178,3 +173,4 @@ public class Main extends Activity {
         startActivityForResult(i, 1);
     }
 }
+

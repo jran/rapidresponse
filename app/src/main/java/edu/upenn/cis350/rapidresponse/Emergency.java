@@ -36,6 +36,7 @@ public class Emergency extends Activity {
 
         Intent intent = getIntent();
         EMERGENCY_ID = intent.getStringExtra(Homepage.EMERG_ID);
+        
 
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
 
