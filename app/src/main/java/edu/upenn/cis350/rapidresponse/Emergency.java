@@ -27,17 +27,23 @@ import java.util.Date;
  */
 public class Emergency extends Activity {
     public String EMERGENCY_ID = null;
-    public String USER = null;
-
+    public ParseUser user = null; 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emergency);
 
         Intent intent = getIntent();
         EMERGENCY_ID = intent.getStringExtra(Homepage.EMERG_ID);
-        USER = intent.getStringExtra(Homepage.USER);
+        
 
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZushvS2PKQNNw");
+        
+        user = ParseUser.getCurrentUser(); 
+        if(user==null) {
+            Intent i = new Intent(this, Main.class);
+                startActivityForResult(i, 1);
+        }
+        
 
         displayInformation();
         checkResponse();
@@ -53,7 +59,7 @@ public class Emergency extends Activity {
                     String declined = (String) object.get("Declined");
                     if(declined!=null){
                     Log.d("Declined Check", declined);
-                        if(declined.contains(USER)){
+                        if(declined.contains(user.getObjectId()){
                         Button accept = (Button) findViewById(R.id.accept);
                         accept.setBackgroundColor(14087638);
                         accept.setText("");
@@ -67,7 +73,7 @@ public class Emergency extends Activity {
                     String accepted = (String) object.get("Accepted");
                     if(accepted!=null){
                         Log.d("Accepted check", accepted);
-                    if(accepted.contains(USER)){
+                    if(accepted.contains(user.getObjectId()){
                         Button accept = (Button) findViewById(R.id.accept);
                         accept.setBackgroundColor(14087638);
                         accept.setText("");
