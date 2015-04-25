@@ -1,48 +1,31 @@
 package edu.upenn.cis350.rapidresponse;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.SignInButton;
-import com.parse.FindCallback;
 import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParsePush;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+
+/**
+ * A login screen that offers login via email/password and via Google+ sign in.
+ * <p/>
+ * ************ IMPORTANT SETUP NOTES: ************
+ * In order for Google+ sign in to work with your app, you must first go to:
+ * https://developers.google.com/+/mobile/android/getting-started#step_1_enable_the_google_api
+ * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
+ */
 
 
 /**
@@ -54,7 +37,7 @@ import java.util.List;
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
 public class Main extends Activity {
-    public final static String USER = "com.mycompany.myfirstapp.MESSAGE";
+
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -94,7 +77,17 @@ public class Main extends Activity {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-
+        ParseUser user = ParseUser.getCurrentUser();
+        if (user != null) {
+            System.out.println("was here");
+            if (user.get("Role").equals("page_operator")) {
+                Intent i = new Intent(this, CreateAlert.class);
+                startActivityForResult(i, 1);
+            } else {
+                Intent i = new Intent(this, Homepage.class);
+                startActivityForResult(i, 1);
+            }
+        }
     }
 
     /*private void populateAutoComplete() {
@@ -152,20 +145,21 @@ public class Main extends Activity {
 
                 public void done(ParseUser user, com.parse.ParseException e) {
                     if (user != null) {
-                        if(user.get( "Role" ).equals("page_operator")){
+                        if (user.get("Role").equals("page_operator")) {
                             Intent i = new Intent(s, CreateAlert.class);
                             startActivityForResult(i, 1);
                         } else {
                             Intent i = new Intent(s, Homepage.class);
-                            i.putExtra(USER, user.getObjectId());
-                            user.put("LoggedIn",true);
                             startActivityForResult(i, 1);
                         }
                     }
-                    if(e == null){return;}
-                    if(e.getMessage().contains("invalid login parameters")){
+                    if (e == null) {
+                        return;
+                    }
+                    if (e.getMessage().contains("invalid login parameters")) {
                         Toast.makeText(s, "Wrong email or password. Please try again!",
-                                Toast.LENGTH_LONG).show();                    }
+                                Toast.LENGTH_LONG).show();
+                    }
 
                 }
             });
@@ -187,10 +181,5 @@ public class Main extends Activity {
         Intent i = new Intent(this, RegisterActivity.class);
         startActivityForResult(i, 1);
     }
-
-
-
 }
-
-
 
