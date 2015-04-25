@@ -17,6 +17,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,7 @@ import java.util.Date;
  */
 public class Emergency extends Activity {
     public String EMERGENCY_ID = null;
-    public String USER = null;
+    public ParseUser currUser = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +36,14 @@ public class Emergency extends Activity {
 
         Intent intent = getIntent();
         EMERGENCY_ID = intent.getStringExtra(Homepage.EMERG_ID);
-        USER = intent.getStringExtra(Homepage.USER);
 
-        Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZushvS2PKQNNw");
+        Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
 
+        currUser = ParseUser.getCurrentUser();
+        if(currUser==null){
+            Intent i = new Intent(Emergency.this, Homepage.class);
+            startActivity(intent);
+        }
         displayInformation();
         checkResponse();
 
@@ -50,33 +55,38 @@ public class Emergency extends Activity {
 
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
-                    String declined = (String) object.get("Declined");
-                    if(declined!=null){
-                    Log.d("Declined Check", declined);
-                        if(declined.contains(USER)){
-                        Button accept = (Button) findViewById(R.id.accept);
-                        accept.setBackgroundColor(14087638);
-                        accept.setText("");
-
-                        Button decline = (Button) findViewById(R.id.decline);
-                        decline.setBackgroundColor(16771304);
-                        decline.setText("DECLINED");
-                        return;
-                    }}
-
                     String accepted = (String) object.get("Accepted");
-                    if(accepted!=null){
+                    if(accepted!=null) {
                         Log.d("Accepted check", accepted);
-                    if(accepted.contains(USER)){
-                        Button accept = (Button) findViewById(R.id.accept);
-                        accept.setBackgroundColor(14087638);
-                        accept.setText("");
+                        Log.d("User check", currUser.getObjectId());
+                        if (accepted.contains(currUser.getObjectId())) {
+                            Button accept = (Button) findViewById(R.id.accept);
+                            accept.setBackgroundColor(14087638);
+                            accept.setText("Accepted");
 
-                        Button decline = (Button) findViewById(R.id.decline);
-                        decline.setBackgroundColor(16771304);
-                        decline.setText("DECLINED");
-                        return;
-                    }}
+                            Button decline = (Button) findViewById(R.id.decline);
+                            decline.setBackgroundColor(16771304);
+                            decline.setText("");
+                            return;
+                        }
+                    }
+
+                    String declined = (String) object.get("Declined");
+                    if(declined!=null) {
+                        Log.d("Declined Check", declined);
+                        if (declined.contains(currUser.getObjectId())) {
+
+                            Button accept = (Button) findViewById(R.id.accept);
+                            accept.setBackgroundColor(14087638);
+                            accept.setText("");
+
+                            Button decline = (Button) findViewById(R.id.decline);
+                            decline.setBackgroundColor(16771304);
+                            decline.setText("DECLINED");
+                            return;
+                        }
+                    }
+
 
 
                 } else {
@@ -91,7 +101,7 @@ public class Emergency extends Activity {
         query.getInBackground(EMERGENCY_ID, new GetCallback<ParseObject>() {
 
             public void done(ParseObject object, ParseException e) {
-                if (e == null) {
+                if (e == null || e.getMessage().equals("unauthorized")) {
                     TextView describe = (TextView) findViewById(R.id.details);
                     describe.setText(object.getString("Description"));
 
@@ -138,8 +148,9 @@ public class Emergency extends Activity {
 
                     String responded = (String) object.get("Accepted");
                     if(responded==null) responded = "";
-                    responded = responded + USER + "\n";
+                    responded = responded + currUser.getObjectId() + "\n";
                     object.put("Accepted", responded);
+                    object.saveInBackground();
 
                     Log.d("Accepting", "Did it accept?" + responded);
 
@@ -166,8 +177,9 @@ public class Emergency extends Activity {
 
                     String declined = (String) object.get("Declined");
                     if(declined==null) declined="";
-                    declined = declined + USER + "\n";
+                    declined = declined + currUser.getObjectId() + "\n";
                     object.put("Declined", declined);
+                    object.saveInBackground();
 
                     Log.d("Declining", "Did it decline?" + declined);
 

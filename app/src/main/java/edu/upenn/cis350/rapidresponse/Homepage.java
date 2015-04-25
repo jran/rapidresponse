@@ -18,6 +18,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,7 +30,6 @@ import java.util.Set;
  * Created by elianamason on 4/9/15.
  */
 public class Homepage extends Activity implements AdapterView.OnItemSelectedListener {
-    public static String USER = null;
     public final static String EMERG_ID = "edu.upenn.cis350.rapidresponse.MESSAGE";
     String location = null;
 
@@ -39,7 +39,6 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         setContentView(R.layout.homepage);
 
         Intent intent = getIntent();
-        USER = intent.getStringExtra(Main.USER);
 
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
 
@@ -113,21 +112,9 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
     }
 
     public void onLogoutButtonClick(View view){
+        ParseUser.getCurrentUser().logOut();
+
         Intent i = new Intent(this, Main.class);
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.getInBackground(USER, new GetCallback<ParseObject>() {
-
-            public void done(ParseObject object, ParseException e) {
-                if (e == null) {
-                    object.put("LoggedIn", false);
-                } else {
-                    Log.d("Logging Out", e.getMessage());
-                }
-            }
-        });
-
-
         startActivityForResult(i, 1);
     }
 
@@ -135,9 +122,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         Intent intent = new Intent(Homepage.this, Emergency.class);
 
         String emergency_id =(String) view.getTag(R.id.unique_id);
-        //String message = "EMERG_ID";
         intent.putExtra(EMERG_ID,emergency_id);
-        intent.putExtra(USER,USER);
         startActivity(intent);
     }
 
