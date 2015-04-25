@@ -1,9 +1,7 @@
 package edu.upenn.cis350.rapidresponse;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,18 +28,33 @@ import java.util.Date;
  */
 public class Emergency extends Activity {
     public String EMERGENCY_ID = null;
+<<<<<<< HEAD
     public ParseUser currUser = null;
-    public String phone_num;
 
+=======
+    public ParseUser user = null;
+>>>>>>> ab33ecc934976eeaf42e218bd740a840fa31c700
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emergency);
 
         Intent intent = getIntent();
         EMERGENCY_ID = intent.getStringExtra(Homepage.EMERG_ID);
-        
+<<<<<<< HEAD
 
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
+=======
+        
+
+        Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZushvS2PKQNNw");
+        
+        user = ParseUser.getCurrentUser(); 
+        if(user==null) {
+            Intent i = new Intent(this, Main.class);
+                startActivityForResult(i, 1);
+        }
+        
+>>>>>>> ab33ecc934976eeaf42e218bd740a840fa31c700
 
         currUser = ParseUser.getCurrentUser();
         if(currUser==null){
@@ -59,9 +72,27 @@ public class Emergency extends Activity {
 
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
+<<<<<<< HEAD
+=======
+                    String declined = (String) object.get("Declined");
+                    if(declined!=null){
+                    Log.d("Declined Check", declined);
+                        if(declined.contains(user.getObjectId())){
+                        Button accept = (Button) findViewById(R.id.accept);
+                        accept.setBackgroundColor(14087638);
+                        accept.setText("");
+
+                        Button decline = (Button) findViewById(R.id.decline);
+                        decline.setBackgroundColor(16771304);
+                        decline.setText("DECLINED");
+                        return;
+                    }}
+
+>>>>>>> ab33ecc934976eeaf42e218bd740a840fa31c700
                     String accepted = (String) object.get("Accepted");
                     if(accepted!=null) {
                         Log.d("Accepted check", accepted);
+<<<<<<< HEAD
                         Log.d("User check", currUser.getObjectId());
                         if (accepted.contains(currUser.getObjectId())) {
                             Button accept = (Button) findViewById(R.id.accept);
@@ -90,6 +121,12 @@ public class Emergency extends Activity {
                             return;
                         }
                     }
+=======
+                    if(accepted.contains(user.getObjectId())){
+                        Button accept = (Button) findViewById(R.id.accept);
+                        accept.setBackgroundColor(14087638);
+                        accept.setText("");
+>>>>>>> ab33ecc934976eeaf42e218bd740a840fa31c700
 
 
 
@@ -120,9 +157,8 @@ public class Emergency extends Activity {
                     Date date = object.getCreatedAt();
                     time.setText(df.format(date));
 
-                    Button number = (Button) findViewById(R.id.btncall);
+                    TextView number = (TextView) findViewById(R.id.phone_num);
                     number.setText(object.getString("Phone"));
-                    phone_num = object.getString("Phone");
                 } else {
                     Log.d("Populating Texts", e.getMessage());
                 }
@@ -153,7 +189,11 @@ public class Emergency extends Activity {
 
                     String responded = (String) object.get("Accepted");
                     if(responded==null) responded = "";
-                    responded = responded + currUser.getObjectId() + ", " + "\n";
+<<<<<<< HEAD
+                    responded = responded + currUser.getObjectId() + "\n";
+=======
+                    responded = responded + user + "\n";
+>>>>>>> ab33ecc934976eeaf42e218bd740a840fa31c700
                     object.put("Accepted", responded);
                     object.saveInBackground();
 
@@ -182,7 +222,11 @@ public class Emergency extends Activity {
 
                     String declined = (String) object.get("Declined");
                     if(declined==null) declined="";
-                    declined = declined + currUser.getObjectId() + ", " + "\n";
+<<<<<<< HEAD
+                    declined = declined + currUser.getObjectId() + "\n";
+=======
+                    declined = declined + user + "\n";
+>>>>>>> ab33ecc934976eeaf42e218bd740a840fa31c700
                     object.put("Declined", declined);
                     object.saveInBackground();
 
@@ -193,16 +237,6 @@ public class Emergency extends Activity {
                 }
             }
         });
-    }
-
-    public void onCallButtonClick(View view){
-        try {
-            Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + phone_num));
-            startActivity(callIntent);
-        } catch (ActivityNotFoundException activityException) {
-            Log.e("Calling a Phone Number", "Call failed", activityException);
-        }
     }
 }
 

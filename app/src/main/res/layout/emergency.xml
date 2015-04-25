@@ -82,12 +82,15 @@
         android:id="@+id/contact"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.04" />
-    <TextView
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/phone_num"
-        android:layout_weight="0.08" />
+        android:text="Call"
+        android:id="@+id/btncall"
+        android:layout_gravity="center_horizontal"
+        android:background="#ff8afbff"
+        android:onClick="onCallButtonClick" />
 
     <Button
         android:layout_width="match_parent"

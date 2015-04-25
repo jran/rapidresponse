@@ -30,20 +30,30 @@ import java.util.Set;
  * Created by elianamason on 4/9/15.
  */
 public class Homepage extends Activity implements AdapterView.OnItemSelectedListener {
+<<<<<<< HEAD
+=======
+    public final ParseUser user = ParseUser.getCurrentUser();;
+>>>>>>> ab33ecc934976eeaf42e218bd740a840fa31c700
     public final static String EMERG_ID = "edu.upenn.cis350.rapidresponse.MESSAGE";
     String location = null;
-    public ParseUser currUser = null;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
 
+<<<<<<< HEAD
         Intent intent = getIntent();
 
+=======
+>>>>>>> ab33ecc934976eeaf42e218bd740a840fa31c700
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
-        currUser = ParseUser.getCurrentUser();
 
+        if (user == null){
+            Intent i = new Intent(this, Main.class); 
+            startActivity(i);
+        }
+        
         Spinner spinner = (Spinner) findViewById(R.id.location_info);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -62,43 +72,23 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
 
     private void displayNotifications(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Alert");
-        query.whereEqualTo("EmergencyType",currUser.get("Team"));
-        query.whereContains("Building", currUser.get("Building").toString());
-        query.orderByDescending("createdAt");
+        if(!location.equals("All")){
+            query.whereEqualTo("Building",location);
+            Log.d("Building", "searching within the following location: " + location);
+        }
+        query.orderByDescending("updatedAt");
         query.setLimit(5);
         query.findInBackground(new FindCallback<ParseObject>() {
 
             public void done(List<ParseObject> emergencyList, ParseException e) {
                 if (e == null) {
                     Log.d("Building", "Retrieved " + emergencyList.size() + " emergencies");
-                    if(emergencyList.size()==0){
-                        clearContents();
-                        return;
-                    }
                     populateButtons(emergencyList);
                 } else {
                     Log.d("Building", "Error: " + e.getMessage());
                 }
             }
         });
-    }
-
-    private void clearContents(){
-
-        Button b = (Button) findViewById(R.id.button1);
-        b.setText("");
-
-        b = (Button) findViewById(R.id.button2);
-        b.setText("");
-
-        b = (Button) findViewById(R.id.button3);
-        b.setText("");
-
-        b = (Button) findViewById(R.id.button4);
-        b.setText("");
-
-        b = (Button) findViewById(R.id.button5);
-        b.setText("");
     }
 
     private void populateButtons(List<ParseObject> emergencies){
@@ -127,9 +117,6 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         location = parent.getItemAtPosition(pos).toString();
         TextView loc = (TextView) findViewById(R.id.location_state);
         loc.setText("Current Recorded Building: " +location);
-        currUser.put("Building", location);
-        currUser.saveInBackground();
-        displayNotifications();
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -137,9 +124,14 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
     }
 
     public void onLogoutButtonClick(View view){
+<<<<<<< HEAD
         ParseUser.getCurrentUser().logOut();
 
         Intent i = new Intent(this, Main.class);
+=======
+        Intent i = new Intent(this, Main.class);
+        ParseUser.logOut();
+>>>>>>> ab33ecc934976eeaf42e218bd740a840fa31c700
         startActivityForResult(i, 1);
     }
 
@@ -148,6 +140,10 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
 
         String emergency_id =(String) view.getTag(R.id.unique_id);
         intent.putExtra(EMERG_ID,emergency_id);
+<<<<<<< HEAD
+=======
+;
+>>>>>>> ab33ecc934976eeaf42e218bd740a840fa31c700
         startActivity(intent);
     }
 
