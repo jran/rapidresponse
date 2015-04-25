@@ -18,6 +18,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,7 +30,7 @@ import java.util.Set;
  * Created by elianamason on 4/9/15.
  */
 public class Homepage extends Activity implements AdapterView.OnItemSelectedListener {
-    public final ParseUser user = null; 
+    public final ParseUser user = ParseUser.getCurrentUser();;
     public final static String EMERG_ID = "edu.upenn.cis350.rapidresponse.MESSAGE";
     String location = null;
 
@@ -39,14 +40,10 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         setContentView(R.layout.homepage);
 
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
-        
-        ParseUser curruser = ParseUser.getCurrentUser();
-        if (user != null) {
-            user = curruser; 
-        }
-        else{
+
+        if (user == null){
             Intent i = new Intent(this, Main.class); 
-            startActivity(i,1); 
+            startActivity(i);
         }
         
         Spinner spinner = (Spinner) findViewById(R.id.location_info);
@@ -120,8 +117,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
 
     public void onLogoutButtonClick(View view){
         Intent i = new Intent(this, Main.class);
-        user.logout(); 
-        
+        ParseUser.logOut();
         startActivityForResult(i, 1);
     }
 

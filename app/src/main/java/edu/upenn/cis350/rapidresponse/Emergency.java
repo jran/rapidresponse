@@ -17,6 +17,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,7 @@ import java.util.Date;
  */
 public class Emergency extends Activity {
     public String EMERGENCY_ID = null;
-    public ParseUser user = null; 
+    public ParseUser user = null;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emergency);
@@ -59,7 +60,7 @@ public class Emergency extends Activity {
                     String declined = (String) object.get("Declined");
                     if(declined!=null){
                     Log.d("Declined Check", declined);
-                        if(declined.contains(user.getObjectId()){
+                        if(declined.contains(user.getObjectId())){
                         Button accept = (Button) findViewById(R.id.accept);
                         accept.setBackgroundColor(14087638);
                         accept.setText("");
@@ -73,7 +74,7 @@ public class Emergency extends Activity {
                     String accepted = (String) object.get("Accepted");
                     if(accepted!=null){
                         Log.d("Accepted check", accepted);
-                    if(accepted.contains(user.getObjectId()){
+                    if(accepted.contains(user.getObjectId())){
                         Button accept = (Button) findViewById(R.id.accept);
                         accept.setBackgroundColor(14087638);
                         accept.setText("");
@@ -144,7 +145,7 @@ public class Emergency extends Activity {
 
                     String responded = (String) object.get("Accepted");
                     if(responded==null) responded = "";
-                    responded = responded + USER + "\n";
+                    responded = responded + user + "\n";
                     object.put("Accepted", responded);
 
                     Log.d("Accepting", "Did it accept?" + responded);
@@ -172,7 +173,7 @@ public class Emergency extends Activity {
 
                     String declined = (String) object.get("Declined");
                     if(declined==null) declined="";
-                    declined = declined + USER + "\n";
+                    declined = declined + user + "\n";
                     object.put("Declined", declined);
 
                     Log.d("Declining", "Did it decline?" + declined);
