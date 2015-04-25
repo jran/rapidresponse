@@ -3,7 +3,6 @@ package edu.upenn.cis350.rapidresponse;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,8 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.parse.Parse;
+
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -38,8 +38,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
-
 
         // Set up the login form.
         team = null;
@@ -62,7 +60,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
 
             @Override
             public void afterTextChanged(Editable s) {
-                System.out.println(flag);
                 if(flag) {
                     String number = s.toString();
                     int i = 0;
@@ -88,17 +85,18 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
             }
         });
         Spinner teamSpinner = (Spinner)findViewById(R.id.teamSpinner);
-        String[] items = new String[]{"team 1", "team 2", "team 3"};
+        String[] items = new String[]{"Medical Rapid Response", "Surgical Rapid Response", "OB Emergency", "Anesthesia Stat", "Code Call", "Airway Emergency"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         teamSpinner.setAdapter(adapter);
         teamSpinner.setOnItemSelectedListener(this);
         Spinner buildingSpinner = (Spinner)findViewById(R.id.buildingSpinner);
-        items = new String[]{"building 1", "building 2", "building 3"};
+        items = new String[]{"Founders", "Pereleman Center", "Rhoads", "Silverstein"};
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         buildingSpinner.setAdapter(adapter);
         buildingSpinner.setOnItemSelectedListener(this);
         Spinner roleSpinner = (Spinner)findViewById(R.id.roleSpinner);
-        items = new String[]{"role 1", "role 2", "role 3"};
+        items = new String[]{"Medicine Resident", "Surgical Resident", "OB Resident", "Pharmacist",
+            "CCOPS", "Respiratory Therapy", "Coordinator", "Anesthesia", "Other"};
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         roleSpinner.setAdapter(adapter);
         roleSpinner.setOnItemSelectedListener(this);
@@ -209,16 +207,29 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         dialog.setMessage(getString(R.string.progress_signup));
         dialog.show();
 
+        //clear log out old user
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            Toast.makeText(RegisterActivity.this, "Logging current user out", Toast.LENGTH_LONG);
+            ParseUser.logOut();
+        }
+
         // Set up a new Parse user
         ParseUser user = new ParseUser();
         user.setUsername(email);
         user.setPassword(password1);
         user.setEmail(email);
+        user.put("FirstName", firstname);
+        user.put("LastName", lastname);
         user.put("Phone", phone);
         user.put("Team", team);
         user.put("Building", building);
         user.put("Role", role);
 
+
+        ParsePush.subscribeInBackground(building);
+        ParsePush.subscribeInBackground(team);
+        ParsePush.subscribeInBackground(role);
 
         // Call the Parse signup method
         user.signUpInBackground(new SignUpCallback() {
