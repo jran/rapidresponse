@@ -34,12 +34,12 @@
     <div>
       <h1>Alert Sent! Wait for Responses</h1>
        <div>
-	<p>Summary of the alert: </p>
-	<p>Emergency Type: </p>
-	<p>Description: </p>
-	<p>Location: </p>
-	<p>Building: </p>
-	<p>Phone: </p>
+	<p>Summary of the alert:  </p>
+	<p>Emergency Type: <a id="emergencytype"></a></p>
+	<p>Description: <a id="description"></a></p>
+	<p>Room: <a id="room"></a></p>
+	<p>Building: <a id="building"></a></p>
+	<p>Phone: <a id="phone"></a></p>
       </div>
       <div>
 	Sent to:

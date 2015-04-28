@@ -1,21 +1,51 @@
 window.onload=function(){
+	event.preventDefault();
 	var alertid = window.location.search.split("?")[1];
+
 	Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
 	var submitAlert = Parse.Object.extend("Alert");
 	var query = new Parse.Query(submitAlert);
-	query.equalTo("ObjectId", alertid);
-	query.find({
- 		 success: function(results) {
-    			alert("Successfully retrieved " + results.length + " scores.");
-    			// Do something with the returned Parse.Object values
-    			}
+	console.log(alertid);
+	query.get(alertid, {
+  		success: function(object) {
+			var emergencyType = object.get("EmergencyType");
+			
+			var typeInfo = document.getElementById('emergencytype');
+			typeInfo.innerHTML = emergencyType;
+			var detailInfo= document.getElementById('description');
+			detailInfo.innerHTML= object.get("Description");
+			var roomInfo = document.getElementById('room');
+			roomInfo.innerHTML= object.get("Location");
+			var buildingInfo = document.getElementById('building');
+			buildingInfo.innerHTML= object.get("Building");
+			var phoneInfo = document.getElementById('phone');
+			phoneInfo.innerHTML=object.get("Phone");						
+
   		},
-  		error: function(error) {
+  		error: function(object, error) {
     			alert("Error: " + error.code + " " + error.message);
   		}
 	});
+	checkResponse(query, alertid);
+}
 
-	document.getElementById('emergencytype').innerHTML=
+function checkResponse(query, alertid){
+	setInterval(function(){ 
+		query.get(alertid, {
+  			success: function(object) {
+				var accepted = object.get("Accepted");
+				var declined = object.get("Declined");
+				var accept = document.getElementById('accepted');
+				accept.innerHTML=accepted;
+		  		},
+  			error: function(object, error) {
+    				alert("Error: " + error.code + " " + error.message);
+  		}
+		});
+	}, 3000);
+}
+
+/*
 	document.getElementById('form-alert').onsubmit=function() {
 		event.preventDefault();
       		var location = document.getElementsByName('building');
@@ -73,15 +103,6 @@ window.onload=function(){
       
    }
 
-}
-
-
-function toggle(source) {
-	checkboxes = document.getElementsByName('building');
-  	for(var i=0, n=checkboxes.length;i<n;i++) {
-   	 	checkboxes[i].checked = source.checked;
-  	}
-}
 function roles(s){
 	selection = s.value; 
 	medical = document.getElementsByName('medicine');
@@ -139,3 +160,4 @@ function roles(s){
          		break;
    }
 }
+*/

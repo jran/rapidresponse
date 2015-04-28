@@ -45,7 +45,7 @@ window.onload=function(){
 		  		success: function(){
 		      			console.log("Push was successful");
 					alert("Alert Sent. Monitor Responses?");
-					window.location = './afteralert.html?alertid='+al.id;
+					window.location = './afteralert.html?'+al.id;
 		  		},
 		  		error: function(error){
 		      			console.log("Error: "+error.value);
