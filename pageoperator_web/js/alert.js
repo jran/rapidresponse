@@ -84,6 +84,7 @@ function roles(s){
 	medical = document.getElementById('medicine');
 	surgical = document.getElementById('surgical');
 	pharmacist = document.getElementById('pharmacist');
+	ob = document.getElementById('ob');
 	ccops = document.getElementById('CCOPS');
 	respiratory = document.getElementById('respiratory');
 	anesthesia = document.getElementById('anesthesia');
@@ -92,6 +93,7 @@ function roles(s){
        		case 'Medical Rapid Response':
          		medical.checked = true;
 			surgical.checked = false;
+			ob.checked = false;
          		pharmacist.checked = true;
          		ccops.checked = true;
 			respiratory.checked = true;
@@ -102,15 +104,27 @@ function roles(s){
          		medical.checked = false;
 			surgical.checked = true;
          		pharmacist.checked = true;
-         		ccops.checked = true;
+         		ob.checked = false;
+			ccops.checked = true;
 			respiratory.checked = true;
+			anesthesia.checked = false;
+		   	coordinator.checked = true;
+         		break;
+		case 'OB Emergency':
+         		medical.checked = false;
+			surgical.checked = false;
+			ob.checked = true;
+         		pharmacist.checked = true;
+         		ccops.checked = false;
+			respiratory.checked = false;
 			anesthesia.checked = false;
 		   	coordinator.checked = true;
          		break;
        		case 'Anesthesia Stat':
          		medical.checked = false;
 			surgical.checked = false;
-         		pharmacist.checked = false;
+         		ob.checked = false;
+			pharmacist.checked = false;
          		ccops.checked = false;
 			respiratory.checked = true;
 			anesthesia.checked = true;
@@ -119,7 +133,8 @@ function roles(s){
        		case 'Code Call':
          		medical.checked = true;
 			surgical.checked = true;
-         		pharmacist.checked = true;
+         		ob.checked = false;
+			pharmacist.checked = true;
          		ccops.checked = true;
 			respiratory.checked = true;
 			anesthesia.checked = true;
@@ -128,7 +143,8 @@ function roles(s){
        		case 'Airway Emergency':
          		medical.checked = false;
 			surgical.checked = true;
-         		pharmacist.checked = false;
+         		ob.checked = false;
+			pharmacist.checked = false;
          		ccops.checked = false;
 			respiratory.checked = true;
 			anesthesia.checked = true;
