@@ -1,9 +1,21 @@
 window.onload=function(){
-	document.getElementsByName('medicine')[0].checked=true;
-	document.getElementsByName('pharmacist')[0].checked=true;
-	document.getElementsByName('CCOPS')[0].checked=true;
-	document.getElementsByName('respiratory')[0].checked=true;
-	document.getElementsByName('coordinator')[0].checked=true;
+	var alertid = window.location.search.split("?")[1];
+	Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
+	var submitAlert = Parse.Object.extend("Alert");
+	var query = new Parse.Query(submitAlert);
+	query.equalTo("ObjectId", alertid);
+	query.find({
+ 		 success: function(results) {
+    			alert("Successfully retrieved " + results.length + " scores.");
+    			// Do something with the returned Parse.Object values
+    			}
+  		},
+  		error: function(error) {
+    			alert("Error: " + error.code + " " + error.message);
+  		}
+	});
+
+	document.getElementById('emergencytype').innerHTML=
 	document.getElementById('form-alert').onsubmit=function() {
 		event.preventDefault();
       		var location = document.getElementsByName('building');
@@ -39,18 +51,18 @@ window.onload=function(){
 		  		data: {
 		      			alert: emergencyType + " in "+room+". Details: "+details+"\nContact:"+phone,
 		      			ObjectID: al.id,
-		      			sound: "loudalert.wav"
+		      			sound: "cheering.caf"
 		  		}
 	      		}, {
 		  		success: function(){
 		      			console.log("Push was successful");
-					alert("Alert Sent. Monitor Responses?");
-					window.location = './afteralert.html?alertid='+al.id;
 		  		},
 		  		error: function(error){
 		      			console.log("Error: "+error.value);
 		  		}
-	      		});	          
+	      		});
+	      		alert("Form Submitted. Send a new one?");	      
+			return false;	      
 	  	},
 	  		error: function(al, error) {
 	      			console.log(error.message);
@@ -58,6 +70,7 @@ window.onload=function(){
 	      			// error is a Parse.Error with an error code and message.
 	  		}
       		});
+      
    }
 
 }

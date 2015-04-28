@@ -32,12 +32,12 @@
   <section class="container"> 
     <div>
       <h1>Alert RRT</h1>
-      <form id="form-alert" role="form" method="post"> <!--??-->
+      <form id="form-alert" role="form" method="POST"> <!--??-->
 	<p>Location</p>
 	<input type="checkbox" onClick="toggle(this)" /> All<br/>
-	<input type="checkbox" name="building" value="founders"> Founders<br/>
-	<input type="checkbox" name="building" value="rhoads"> Rhoads<br/>
-	<input type="checkbox" name="building" value="silverstein"> Silvertstein<br/>
+	<input type="checkbox" name="building" value="Founders"> Founders<br/>
+	<input type="checkbox" name="building" value="Rhoads"> Rhoads<br/>
+	<input type="checkbox" name="building" value="Silverstein"> Silvertstein<br/>
 	<p><input type="text" id="room" placeholder="Room Number"></p>
 	<p> Types of Emergencies</p>
 	<select id="emergencyType" onchange="roles(this)">
@@ -59,7 +59,7 @@
 	 <input type="checkbox" name="coordinator"> Coordinator<br/>
 	 <input type="checkbox" name="anesthesia"> Anethesia<br/>
 	 <input type="checkbox" name="Other"> Other<br/>
-    <button class="submit" type="submit">Send Alert</button>
+	 <button id="sendalert">Send Alert</button>
       </form>
     </div>
 
