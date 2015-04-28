@@ -1,6 +1,10 @@
 window.onload=function(){
 	event.preventDefault();
 	var alertid = window.location.search.split("?")[1];
+	initializeRoles = document.getElementsByName('role');
+	for(var i=0, n=initializeRoles.length;i<n;i++) {
+		initializeRoles[i].style.display = 'none';
+  	}
 
 	Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
 	var submitAlert = Parse.Object.extend("Alert");
@@ -9,7 +13,12 @@ window.onload=function(){
 	query.get(alertid, {
   		success: function(object) {
 			var emergencyType = object.get("EmergencyType");
-			
+			var roles = object.get("Roles");
+			if(roles!=null){
+				for(var j=0, n=roles.length;j<n;j++) {
+					document.getElementById(roles[j]).style.display = 'block';
+  				}
+			}
 			var typeInfo = document.getElementById('emergencytype');
 			typeInfo.innerHTML = emergencyType;
 			var detailInfo= document.getElementById('description');
@@ -26,23 +35,49 @@ window.onload=function(){
     			alert("Error: " + error.code + " " + error.message);
   		}
 	});
-	checkResponse(query, alertid);
+	setInterval(function(){ checkResponse(query, alertid);}, 3000);
 }
 
 function checkResponse(query, alertid){
-	setInterval(function(){ 
-		query.get(alertid, {
+	query.get(alertid, {
   			success: function(object) {
-				var accepted = object.get("Accepted");
-				var declined = object.get("Declined");
-				var accept = document.getElementById('accepted');
-				accept.innerHTML=accepted;
-		  		},
+				var acceptList = object.get("Accepted");
+				if(acceptList!=null){
+					var accepted = acceptList.split(",");
+				}
+				var declineList = object.get("Declined");
+				if(declineList!=null){
+					var declined= declineList.split(",");
+				}
+				var acceptQuery = new Parse.Query(Parse.User);
+				acceptQuery.containedIn("objectId", accepted);
+				acceptQuery.find({
+  					success: function(userAccept) {
+						for(var i=0, n=userAccept.length;i<n;i++) {
+    							var role = document.getElementById(userAccept[i].get('Role'));
+							role.innerHTML=userAccept[i].get("FirstName")+" "+userAccept[i].get("LastName")+ " ("+userAccept[i].id+") accepted! Number: "+userAccept[i].get("Phone")+"\n";
+						}
+						var declineQuery = new Parse.Query(Parse.User);
+						declineQuery.containedIn("objectId", declined);
+						declineQuery.find({
+  							success: function(userDecline) {
+								for(var i=0, n=userDecline.length;i<n;i++) {
+    									var role = document.getElementById(userDecline[i].get('Role'));
+									role.innerHTML=userDecline[i].get("FirstName")+" "+userDecline[i].get("LastName")+ " ("+userDecline[i].id+") declined. Notify others?"+"\n";
+								}
+
+
+  							}
+						});
+
+  					}
+				});
+
+			},
   			error: function(object, error) {
     				alert("Error: " + error.code + " " + error.message);
-  		}
-		});
-	}, 3000);
+  			}
+	});
 }
 
 /*
@@ -103,61 +138,4 @@ function checkResponse(query, alertid){
       
    }
 
-function roles(s){
-	selection = s.value; 
-	medical = document.getElementsByName('medicine');
-	surgical = document.getElementsByName('surgical');
-	pharmacist = document.getElementsByName('pharmacist');
-	ccops = document.getElementsByName('CCOPS');
-	respiratory = document.getElementsByName('respiratory');
-	anesthesia = document.getElementsByName('anesthesia');
-	coordinator = document.getElementsByName('coordinator');
-   	switch(selection){
-       		case 'Medical Rapid Response':
-         		medical[0].checked = true;
-			surgical[0].checked = false;
-         		pharmacist[0].checked = true;
-         		ccops[0].checked = true;
-			respiratory[0].checked = true;
-			anesthesia[0].checked = false;
-		   	coordinator[0].checked = true;
-         		break;
-       		case 'Surgical Rapid Response':
-         		medical[0].checked = false;
-			surgical[0].checked = true;
-         		pharmacist[0].checked = true;
-         		ccops[0].checked = true;
-			respiratory[0].checked = true;
-			anesthesia[0].checked = false;
-		   	coordinator[0].checked = true;
-         		break;
-       		case 'Anesthesia Stat':
-         		medical[0].checked = false;
-			surgical[0].checked = false;
-         		pharmacist[0].checked = false;
-         		ccops[0].checked = false;
-			respiratory[0].checked = true;
-			anesthesia[0].checked = true;
-		   	coordinator[0].checked = false;
-         		break;
-       		case 'Code Call':
-         		medical[0].checked = true;
-			surgical[0].checked = true;
-         		pharmacist[0].checked = true;
-         		ccops[0].checked = true;
-			respiratory[0].checked = true;
-			anesthesia[0].checked = true;
-		   	coordinator[0].checked = true;
-         		break;
-       		case 'Airway Emergency':
-         		medical[0].checked = false;
-			surgical[0].checked = true;
-         		pharmacist[0].checked = false;
-         		ccops[0].checked = false;
-			respiratory[0].checked = true;
-			anesthesia[0].checked = true;
-		   	coordinator[0].checked = false;
-         		break;
-   }
-}
 */

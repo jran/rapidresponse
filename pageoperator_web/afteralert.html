@@ -33,26 +33,44 @@
     <div>
       <h1>Alert Sent! Wait for Responses</h1>
        <div>
-	<p>Summary of the alert:  </p>
-	<p>Emergency Type: <a id="emergencytype"></a></p>
-	<p>Description: <a id="description"></a></p>
-	<p>Room: <a id="room"></a></p>
-	<p>Building: <a id="building"></a></p>
-	<p>Phone: <a id="phone"></a></p>
+	<p/>
+	<h2>Summary of the alert:  </h2>
+	<p><span style="font-weight: bold"> Emergency Type: </span><span id="emergencytype"></span></p>
+	<p><span style="font-weight: bold">Description: </span><span id="description"></span></p>
+	<p><span style="font-weight: bold">Room: </span><span id="room"></span></p>
+	<p><span style="font-weight: bold">Building: </span><span id="building"></span></p>
+	<p><span style="font-weight: bold">Phone: </span><span id="phone"></span></p>
       </div>
       <div>
-	<p id="accepted"></p>
-	Sent to:
-	Medicine Resident
-	Still waiting...
-	Accepted - One the way!
-	Declined - notify others?
-	 Surgical Resident
-	 Pharmacist
-	 CCOPS 
-	 Respiratory Therapy
-	 Coordinator
-	 Anethesia
+	<h2>Responses</h2>
+	<div name="role" id="medicine">
+	<p style="font-weight: bold">Medicine Resident:</p>
+	<p id="Medical Resident"></p>
+	</div>
+	<div name="role" id="surgical">
+	 <p style="font-weight: bold">Surgical Resident: </p>
+	 <p id="Surgical Resident"></p>
+	</div>
+	<div name="role" id="pharmacist">
+	 <p style="font-weight: bold">Pharmacist</p>
+	 <p id="Pharmacist"></p>
+	 </div>
+	<div name="role" id="CCOPS">
+	 <p style="font-weight: bold">CCOPS </p>
+	 <p id="CCOPS"></p>
+	 </div>
+	<div name="role" id="respiratory">
+	 <p style="font-weight: bold">Respiratory Therapy</p>
+	 <p id="Respiratory Therapist"></p>
+	 </div>
+	<div name="role" id="coordinator">
+	 <p style="font-weight: bold">Coordinator</p>
+	 <p id="Coordinator"></p>
+	 </div>
+	<div name="role" id="anesthesia">
+	 <p style="font-weight: bold">Anesthesia</p>
+	 <p id="Anesthesia"></p>
+	 </div>
       </div>
     </div>
 
