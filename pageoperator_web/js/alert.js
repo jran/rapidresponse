@@ -11,7 +11,7 @@ window.onload=function(){
 		var buildingForQuery = [];
       		for (var i=0, n=location.length; i<n; i++){
 	  		buildings = buildings + location[i].value +",";
-			buildingForQuery.push(location[i];
+			buildingForQuery.push(location[i]);
       		}
 		buildings = buildings.substring(0, buildings.length-1);
       		var room = document.getElementById('room').value;
@@ -47,7 +47,6 @@ window.onload=function(){
 		  		data: {
 		      			alert: emergencyType + " in "+room+". Details: "+details+"\nContact:"+phone,
 		      			ObjectID: al.id,
-		      			sound: "loudalert.wav"
 		  		}
 	      		}, {
 		  		success: function(){

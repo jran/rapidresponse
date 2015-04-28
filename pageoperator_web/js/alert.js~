@@ -40,12 +40,8 @@ window.onload=function(){
 	      		console.log(al.id+" saved successfully");
 	      		// The object was saved successfully.
 	      		// send push notification
-			var userQuery = new Parse.Query(Parse.User);
-			userQuery.equalTo('Team', emergencyType);
-			userQuery.containedIn('Building', buildingForQuery);
 
 	      		var pushQuery = new Parse.Query(Parse.Installation);
-			pushQuery.matchesQuery('user', userQuery);
 	      		Parse.Push.send({
 		  		where: pushQuery,
 		  		data: {
