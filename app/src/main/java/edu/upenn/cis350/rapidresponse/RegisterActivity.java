@@ -87,7 +87,7 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
             }
         });
         Spinner teamSpinner = (Spinner)findViewById(R.id.teamSpinner);
-        String[] items = new String[]{"Medical Rapid Response", "Surgical Rapid Response", "OB Emergency", "Anesthesia Stat", "Code Call", "Airway Emergency"};
+        String[] items = new String[]{"Medical Rapid Response", "Surgical Rapid Response", "OB Emergency", "Anesthesia Stat", "Airway Emergency"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         teamSpinner.setAdapter(adapter);
         teamSpinner.setOnItemSelectedListener(this);

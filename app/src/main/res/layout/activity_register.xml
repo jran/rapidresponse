@@ -79,7 +79,7 @@
                     android:id="@+id/teamSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="25pt"
-                    android:background="@android:drawable/btn_dropdown"
+                    android:background="@android:drawable/btn_default"
                     android:spinnerMode="dropdown"
                     />
 

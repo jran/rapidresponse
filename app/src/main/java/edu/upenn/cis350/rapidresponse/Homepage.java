@@ -131,6 +131,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         check = check+1;
         if (check>1){
         location = parent.getItemAtPosition(pos).toString();
+        if(location.equals("All")) location = "Founders,Pereleman Center,Rhoads,Silverstein";
         TextView loc = (TextView) findViewById(R.id.location_state);
         loc.setText("Current Recorded Building: " +location);
         currUser.put("Building", location);
@@ -148,6 +149,12 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         Intent i = new Intent(this, Main.class);
         startActivityForResult(i, 1);
     }
+
+    public void onEditClick(View view){
+        Intent i = new Intent(this, EditActivity.class);
+        startActivityForResult(i,1);
+    }
+
     @TargetApi(11)
     public void onButtonClick(View view){
         Intent intent = new Intent(Homepage.this, Emergency.class);

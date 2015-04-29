@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Edit Login"
-        android:id="@+id/edit_login_button" />
+        android:id="@+id/edit_login_button"
+        android:background="@android:drawable/btn_default"
+        android:onClick="onEditClick"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -17,7 +19,8 @@
         android:layout_height="wrap_content"
         android:text="Logout"
         android:id="@+id/logout"
-        android:onClick="onLogoutButtonClick"/>
+        android:onClick="onLogoutButtonClick"
+        android:background="@android:drawable/btn_default" />
 
 
     <Spinner
@@ -25,8 +28,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/location_info"
         android:spinnerMode="dropdown"
-        android:layout_weight="0.26"
-        android:background="#ffd6de9d" />
+        android:background="@android:drawable/btn_default" />
 
     <TextView
         android:layout_width="180dp"
