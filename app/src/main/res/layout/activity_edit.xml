@@ -1,6 +1,147 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:gravity="center_horizontal"
+    android:orientation="vertical" android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="edu.upenn.cis350.rapidresponse.EditActivity">
 
+    <!-- Edit -->
+    <ProgressBar android:id="@+id/edit_progress" style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp" android:visibility="gone" />
+
+    <ScrollView android:id="@+id/edit_form" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout android:id="@+id/emial_edit_form" android:layout_width="match_parent"
+                android:layout_height="550dp" android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/editFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_new_first_name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_gravity="center_horizontal" />
+
+                <EditText
+                    android:id="@+id/editLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_new_last_name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_gravity="center_horizontal" />
+
+                <EditText android:id="@+id/editEmail" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:hint="@string/prompt_new_email"
+                    android:inputType="textEmailAddress" android:maxLines="1"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/editPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_new_cellphone"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_gravity="center_horizontal" />
+
+
+                <EditText android:id="@+id/editPassword1" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:hint="@string/prompt_new_password"
+                    android:imeActionId="@+id/edit"
+                    android:imeActionLabel="@string/action_save"
+                    android:imeOptions="actionUnspecified" android:inputType="textPassword"
+                    android:maxLines="1" android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/editPassword2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_new_password"
+                    android:imeActionId="@+id/edit"
+                    android:imeActionLabel="@string/action_save"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <Spinner
+                    android:prompt="@string/prompt_new_team"
+                    android:id="@+id/editTeamSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="25pt"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown"
+                    />
+
+                <Spinner
+                    android:prompt="@string/prompt_new_building"
+                    android:id="@+id/editBuildingSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="25pt"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+                <Spinner
+                    android:prompt="@string/prompt_new_role"
+                    android:id="@+id/editRoleSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="25pt"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+                <Space
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"/>
+
+                <EditText android:id="@+id/oldPassword" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:hint="@string/prompt_old_password"
+                    android:imeActionId="@+id/save"
+                    android:imeActionLabel="@string/action_save"
+                    android:imeOptions="actionUnspecified" android:inputType="textPassword"
+                    android:maxLines="1" android:singleLine="true"
+                    android:textColorHint="#F00"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <Button android:id="@+id/save_button" style="?android:textAppearanceSmall"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp" android:text="@string/action_save"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:onClick="onSaveButtonClick" />
+
+                    <Button android:id="@+id/return_button" style="?android:textAppearanceSmall"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp" android:text="@string/action_return"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:onClick="onReturnButtonClick"/>
+
+                    <Button android:id="@+id/delete_button" style="?android:textAppearanceSmall"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp" android:text="@string/action_delete"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:onClick="onDeleteButtonClick"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
