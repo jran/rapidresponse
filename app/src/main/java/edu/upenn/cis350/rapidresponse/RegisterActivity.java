@@ -132,7 +132,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         //do nothing
     }
 
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -148,6 +147,9 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         Pattern pattern = Pattern.compile("\\d{3}-\\d{3}-\\d{4}");
         Matcher matcher = pattern.matcher(phone);
         boolean validationError = false;
+        //String uphsEmail = "@uphs.upenn.edu"; //cannot be used yet because no uphs email yet
+        String uphsEmail = ""; //For now
+
         StringBuilder validationErrorMessage = new StringBuilder(getString(R.string.error_intro)+"\n");
         if (firstname.length() == 0) {
             validationError = true;
@@ -160,10 +162,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         if (email.length() == 0) {
             validationError = true;
             validationErrorMessage.append(getString(R.string.error_blank_email)+"\n");
-        }
-        if (!email.contains("@")) {
-            validationError = true;
-            validationErrorMessage.append(getString(R.string.error_invalid_email)+"\n");
         }
         if (phone.length() == 0) {
             validationError = true;
@@ -197,6 +195,11 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
             validationError = true;
             validationErrorMessage.append(getString(R.string.error_blank_role)+"\n");
         }
+        //Ensure email ends in @uphs.upenn.edu
+        if (!email.endsWith(uphsEmail) || !email.contains("@")) {
+            validationError = true;
+            validationErrorMessage.append(getString(R.string.error_invalid_email)+"\n");
+        }
 
         if (validationError) {
             Toast.makeText(RegisterActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG)
@@ -218,7 +221,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         user.put("Team", team);
         user.put("Building", building);
         user.put("Role", role);
-
 
         ParsePush.subscribeInBackground(building);
         ParsePush.subscribeInBackground(team);

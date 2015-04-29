@@ -1,0 +1,85 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Your Alert is Sent! Wait to see who responded</title>
+  <meta name="description" content="My Parse App">
+  <meta name="viewport" content="width=device-width">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
+
+      <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/home.css" rel="stylesheet">
+</head>
+
+<script type="text/javaScript" src="js/alertconfirmation.js"></script>
+
+
+<body>
+	<div class="rrt-navigation">
+      <div class="container">
+        <nav class="rrt-nav">
+          <a class="nav-item" href="home.html">Home</a>
+          <a class="nav-item active" href="#">Create Alert</a>
+          <a class="nav-item" href="#">Past Alerts</a>
+          <a class="nav-item" href="#">On Duty</a>
+          <a class="nav-item" href="#">Log Out</a>
+        </nav>
+      </div>
+    </div>
+
+  <section class="container"> 
+    <div>
+      <h1>Alert Sent! Wait for Responses</h1>
+       <div>
+	<p/>
+	<h2>Summary of the alert:  </h2>
+	<p><span style="font-weight: bold"> Emergency Type: </span><span id="emergencytype"></span></p>
+	<p><span style="font-weight: bold">Description: </span><span id="description"></span></p>
+	<p><span style="font-weight: bold">Room: </span><span id="room"></span></p>
+	<p><span style="font-weight: bold">Building: </span><span id="building"></span></p>
+	<p><span style="font-weight: bold">Phone: </span><span id="phone"></span></p>
+      </div>
+      <div>
+	<h2>Responses</h2>
+	<div name="role" id="medicine">
+	<p style="font-weight: bold">Medicine Resident:</p>
+	<p id="Medicine Resident"></p>
+	</div>
+	<div name="role" id="surgical">
+	 <p style="font-weight: bold">Surgical Resident: </p>
+	 <p id="Surgical Resident"></p>
+	</div>
+
+	<div name="role" id="ob">
+	 <p style="font-weight: bold">OB Resident: </p>
+	 <p id="OB Resident"></p>
+	</div>
+	<div name="role" id="pharmacist">
+	 <p style="font-weight: bold">Pharmacist</p>
+	 <p id="Pharmacist"></p>
+	 </div>
+	<div name="role" id="CCOPS">
+	 <p style="font-weight: bold">CCOPS </p>
+	 <p id="CCOPS"></p>
+	 </div>
+	<div name="role" id="respiratory">
+	 <p style="font-weight: bold">Respiratory Therapy</p>
+	 <p id="Respiratory Therapy"></p>
+	 </div>
+	<div name="role" id="coordinator">
+	 <p style="font-weight: bold">Coordinator</p>
+	 <p id="Coordinator"></p>
+	 </div>
+	<div name="role" id="anesthesia">
+	 <p style="font-weight: bold">Anesthesia</p>
+	 <p id="Anesthesia"></p>
+	 </div>
+      </div>
+    </div>
+
+  </section>
+</body>
+
+</html>
