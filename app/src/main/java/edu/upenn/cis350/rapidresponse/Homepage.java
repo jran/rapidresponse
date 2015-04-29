@@ -1,5 +1,6 @@
 package edu.upenn.cis350.rapidresponse;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
     public final static String EMERG_ID = "edu.upenn.cis350.rapidresponse.MESSAGE";
     String location = null;
     public ParseUser currUser = null;
+    public int check = 0;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,9 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-        location = spinner.getItemAtPosition(0).toString();
+        location = currUser.getString("Building");
+        TextView loc = (TextView) findViewById(R.id.location_state);
+        loc.setText("Current Recorded Building: " +location);
 
         spinner.setOnItemSelectedListener(this);
 
@@ -100,7 +104,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         b = (Button) findViewById(R.id.button5);
         b.setText("");
     }
-
+    @TargetApi(11)
     private void populateButtons(List<ParseObject> emergencies){
         for(int i = 0; i<emergencies.size(); i++){
             ParseObject emergency = emergencies.get(i);
@@ -124,12 +128,14 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
+        check = check+1;
+        if (check>1){
         location = parent.getItemAtPosition(pos).toString();
         TextView loc = (TextView) findViewById(R.id.location_state);
         loc.setText("Current Recorded Building: " +location);
         currUser.put("Building", location);
         currUser.saveInBackground();
-        displayNotifications();
+        displayNotifications();}
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -142,7 +148,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         Intent i = new Intent(this, Main.class);
         startActivityForResult(i, 1);
     }
-
+    @TargetApi(11)
     public void onButtonClick(View view){
         Intent intent = new Intent(Homepage.this, Emergency.class);
 

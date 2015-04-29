@@ -24,7 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/location_info"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:layout_weight="0.26"
+        android:background="#ffd6de9d" />
 
     <TextView
         android:layout_width="180dp"

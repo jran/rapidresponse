@@ -5,6 +5,7 @@
 <resources>
 
     <string-array name="location_array">
+        <item>(Click to Change Building)</item>
         <item>Founders</item>
         <item>Pereleman Center</item>
         <item>Rhoads</item>
