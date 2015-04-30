@@ -34,6 +34,8 @@ public class MyBroadcastReceiver extends ParsePushBroadcastReceiver {
         notificationManager = (NotificationManager)c.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(MY_NOTIFICATION_ID, myNotification);
 
+        Intent intent = new Intent(c, Emergency.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        c.startActivity(intent);
     }
-
 }
