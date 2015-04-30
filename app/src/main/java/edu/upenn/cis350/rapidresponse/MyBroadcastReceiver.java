@@ -6,40 +6,68 @@ import android.content.Context;
 import android.content.Intent;
 import android.app.Notification;
 import android.app.NotificationManager;
-import anroid.app.MediaPlay;
+import android.media.MediaPlayer;
+import org.json.JSONObject;
+import android.util.Log;
+import android.app.PendingIntent;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 /**
  * Created by jran on 2015/4/29.
  */
 public class MyBroadcastReceiver extends ParsePushBroadcastReceiver {
-    private static final String TAG = "PushNotificationReceiver";
     private static final int MY_NOTIFICATION_ID=1;
-    NotificationManager notificationManager;
-    Notification myNotification;
     @Override
     public void onReceive(Context c, Intent i) {
-        super.onReceive(c, i);
-        MediaPlayer mPlayer = MediaPlayer.createthis, edu.upenn.cis350.rapidresponse.R.raw.loudalert);
-        mPlayer.start();
-        /*
-        PendingIntent pi = PendingIntent.getBroadcast(c, 0, new Intent("edu.upenn.cis350.rapidresponse"),0 );
-        myNotification=new NotificationCompat.Builder(c)
-                .setContentTitle("This is a notification that uses a custom sound.")
-                .setContentText("Notification")
-                .setTicker("Notification!")
-                .setWhen(System.currentTimeMillis())
-                .setContentIntent(pi)
-                .setSound(Uri.parse("android.resource://edu.upenn.cis350.rapidresponse"+R.raw.loudalert))
-                .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_launcher)
-                .build();
+    try{
+        AlarmPlayer.initialize(c);
+        AlarmPlayer.play();
 
-        notificationManager = (NotificationManager)c.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(MY_NOTIFICATION_ID, myNotification);
-*/
+        String jsonData = i.getExtras().getString("com.parse.Data");
+        JSONObject json = new JSONObject(jsonData);
+
+        String message = null;
+        if(json.has("alert")) {
+            message = json.getString("alert");
+        }
+
+        String objectId = null;
+        if(json.has("ObjectID")) {
+            objectId = json.getString("ObjectID");
+        }
+
+        if(message != null) {
+            generateNotification(c, message);
+        }
 
         Intent intent = new Intent(c, Emergency.class);
-        //intent.putExtra(EMERG_ID,);
+        intent.putExtra(Homepage.EMERG_ID, objectId);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         c.startActivity(intent);
+    } catch(Exception e) {
+        Log.e("NOTIF ERROR", e.toString());
     }
+    }
+    private void generateNotification(Context context, String message) {
+
+        Intent intent = new Intent(context, Emergency.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+        NotificationManager mNotifM = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        final NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setContentText(message)
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(message))
+                        .setAutoCancel(true)
+                        .setDefaults(new NotificationCompat().DEFAULT_VIBRATE);
+
+        mBuilder.setContentIntent(contentIntent);
+
+        mNotifM.notify(MY_NOTIFICATION_ID, mBuilder.build());
+    }
+
 }
