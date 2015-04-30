@@ -71,7 +71,7 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
+        <receiver android:name="edu.upenn.cis350.rapidresponse.MyBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
