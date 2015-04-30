@@ -60,9 +60,9 @@ window.onload=function(){
 */
 
 	      		var pushQuery = new Parse.Query(Parse.Installation);
-           	 	pushQuery.exists("user"); // filter out installations without users
-            		pushQuery.include('user'); // expand the user pointer
-			pushQuery.matchesQuery('user', userQuery);
+           	 	pushQuery.exists("User"); // filter out installations without users
+            		pushQuery.include('User'); // expand the user pointer
+			pushQuery.matchesQuery('User', userQuery);
 	      		Parse.Push.send({
 		  		where: pushQuery,
 		  		data: {

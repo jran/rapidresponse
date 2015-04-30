@@ -2,6 +2,7 @@ package edu.upenn.cis350.rapidresponse;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -150,7 +151,9 @@ public class Emergency extends Activity {
                     Button decline = (Button) findViewById(R.id.decline);
                     decline.setBackgroundColor(16771304);
                     decline.setText("");
-
+                    if(AlarmPlayer.isOn()) {
+                        AlarmPlayer.stop();
+                    }
                     String responded = (String) object.get("Accepted");
                     if(responded==null) responded = "";
                     responded = responded + currUser.getObjectId() + ", " + "\n";
@@ -180,6 +183,9 @@ public class Emergency extends Activity {
                     decline.setBackgroundColor(16771304);
                     decline.setText("DECLINED");
 
+                    if(AlarmPlayer.isOn()) {
+                        AlarmPlayer.stop();
+                    }
                     String declined = (String) object.get("Declined");
                     if(declined==null) declined="";
                     declined = declined + currUser.getObjectId() + ", " + "\n";
