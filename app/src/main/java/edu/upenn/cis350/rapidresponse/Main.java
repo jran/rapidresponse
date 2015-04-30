@@ -127,7 +127,7 @@ public class Main extends Activity {
                     if (user != null) {
 
                         ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
-                        currentInstall.set("User",ParseUser.getCurrentUser());
+                        currentInstall.put("User",ParseUser.getCurrentUser());
                         currentInstall.saveInBackground();
                         Intent i = new Intent(s, Homepage.class);
                         startActivityForResult(i, 1);

@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
+import anroid.app.MediaPlay;
 /**
  * Created by jran on 2015/4/29.
  */
@@ -19,7 +17,11 @@ public class MyBroadcastReceiver extends ParsePushBroadcastReceiver {
     Notification myNotification;
     @Override
     public void onReceive(Context c, Intent i) {
-        PendingIntent pi = PendingIntent.getBroadcast(c, 0, new Intent("com.example.andtip"),0 );
+        super.onReceive(c, i);
+        MediaPlayer mPlayer = MediaPlayer.createthis, edu.upenn.cis350.rapidresponse.R.raw.loudalert);
+        mPlayer.start();
+        /*
+        PendingIntent pi = PendingIntent.getBroadcast(c, 0, new Intent("edu.upenn.cis350.rapidresponse"),0 );
         myNotification=new NotificationCompat.Builder(c)
                 .setContentTitle("This is a notification that uses a custom sound.")
                 .setContentText("Notification")
@@ -33,8 +35,10 @@ public class MyBroadcastReceiver extends ParsePushBroadcastReceiver {
 
         notificationManager = (NotificationManager)c.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(MY_NOTIFICATION_ID, myNotification);
+*/
 
         Intent intent = new Intent(c, Emergency.class);
+        //intent.putExtra(EMERG_ID,);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         c.startActivity(intent);
     }
