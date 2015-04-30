@@ -23,8 +23,7 @@ $(function() {
           error: function(user, error) {
               console.log(error);
               //If failed stay on login page, tell user login credentials incorrect
-              window.location = "home.html";
-              //if 
+              window.location = "createalert.html";
           }
     });
   });
