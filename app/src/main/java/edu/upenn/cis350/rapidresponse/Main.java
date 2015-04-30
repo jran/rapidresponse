@@ -84,8 +84,6 @@ public class Main extends Activity {
             ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
             Log.v("XXXXXXXXX", currentInstall.getInstallationId());
             currentInstall.put("user",ParseUser.getCurrentUser());
-            currentInstall.put("client",ParseUser.getCurrentUser().getObjectId());
-            currentInstall.saveInBackground();
             currentInstall.saveEventually();
 
 
@@ -135,9 +133,7 @@ public class Main extends Activity {
                     if (user != null) {
                         ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
                         currentInstall.put("user",ParseUser.getCurrentUser());
-                        currentInstall.put("client",ParseUser.getCurrentUser().getObjectId());
                         currentInstall.saveInBackground();
-                        currentInstall.saveEventually();
 
                         Intent i = new Intent(s, Homepage.class);
                         startActivityForResult(i, 1);
