@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.ParseInstallation;
+import com.parse.SaveCallback;
 
 
 /**
@@ -81,11 +83,8 @@ public class Main extends Activity {
 
         ParseUser user = ParseUser.getCurrentUser();
         if (user != null) {
-            ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
-            Log.v("XXXXXXXXX", currentInstall.getInstallationId());
-            currentInstall.put("user",ParseUser.getCurrentUser());
-            currentInstall.saveEventually();
 
+            updateUserInstallation();
 
             Intent i = new Intent(this, Homepage.class);
             startActivityForResult(i, 1);
@@ -131,9 +130,7 @@ public class Main extends Activity {
 
                 public void done(ParseUser user, com.parse.ParseException e) {
                     if (user != null) {
-                        ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
-                        currentInstall.put("user",ParseUser.getCurrentUser());
-                        currentInstall.saveInBackground();
+                        updateUserInstallation();
 
                         Intent i = new Intent(s, Homepage.class);
                         startActivityForResult(i, 1);
@@ -156,6 +153,23 @@ public class Main extends Activity {
         // To go from one activity to another, create an Intent using the current Activity and the Class to be created
         Intent i = new Intent(this, RegisterActivity.class);
         startActivityForResult(i, 1);
+    }
+
+    private void updateUserInstallation(){
+        ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
+        Log.v("XXXXXXXXX", currentInstall.getInstallationId());
+        currentInstall.put("user", ParseUser.getCurrentUser());
+        Log.v("XXXXXXXXXXX", ParseUser.getCurrentUser().toString());
+        Log.v("XXXXXXXXXXXXX", currentInstall.get("user").toString());
+        currentInstall.saveInBackground((new SaveCallback() {
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.v("SSSSSSSSSSSSSSS", e.getMessage());
+                } else {
+                    Log.v("SSSSSSSSSSSSSSS", "NO PROBLEM HERE");
+                }
+            }
+        }));
     }
 }
 

@@ -21,6 +21,7 @@ import com.parse.ParseQuery;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -46,7 +47,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
 
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
         currUser = ParseUser.getCurrentUser();
-
+        updateUserInstallation();
         Spinner spinner = (Spinner) findViewById(R.id.location_info);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -64,7 +65,22 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         displayNotifications();
 
     }
-
+    private void updateUserInstallation(){
+        ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
+        Log.v("XXXXXXXXX", currentInstall.getInstallationId());
+        currentInstall.put("user", ParseUser.getCurrentUser());
+        Log.v("XXXXXXXXXXX", ParseUser.getCurrentUser().toString());
+        Log.v("XXXXXXXXXXXXX", currentInstall.get("user").toString());
+        currentInstall.saveInBackground((new SaveCallback() {
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.v("HOMEPAGESSSSSSSSSSSSSSS", e.getMessage());
+                } else {
+                    Log.v("HOMEPAGESSSSSSSSSSSSSSS", "NO PROBLEM HERE");
+                }
+            }
+        }));
+    }
     private void displayNotifications(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Alert");
         query.whereEqualTo("EmergencyType",currUser.get("Team"));
