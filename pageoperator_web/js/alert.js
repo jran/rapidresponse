@@ -10,8 +10,10 @@ window.onload=function(){
       		var buildings = "";
 		var buildingForQuery = [];
       		for (var i=0, n=location.length; i<n; i++){
-	  		buildings = buildings + location[i].value +",";
-			buildingForQuery.push(location[i]);
+			if(location[i].checked){
+	  			buildings = buildings + location[i].value +",";
+				buildingForQuery.push(location[i].value);
+			}
       		}
 		buildings = buildings.substring(0, buildings.length-1);
       		var room = document.getElementById('room').value;
@@ -40,8 +42,27 @@ window.onload=function(){
 	      		console.log(al.id+" saved successfully");
 	      		// The object was saved successfully.
 	      		// send push notification
+			var userQuery = new Parse.Query(Parse.User);
+			userQuery.equalTo('Team', emergencyType);
+			userQuery.containedIn('Building', buildingForQuery);
+/*
+			userQuery.find({
+				success: function(users) {
+					for(var i=0, n=users.length;i<n;i++) {
+						console.log(users[i].id+" "+users[i].get("Team")+users[i].get("Building"));
+					}
+
+  				},
+  				error: function(object, error) {
+    					alert("Error: " + " " + error.message);
+  				}
+			});
+*/
 
 	      		var pushQuery = new Parse.Query(Parse.Installation);
+           	 	pushQuery.exists("user"); // filter out installations without users
+            		pushQuery.include('user'); // expand the user pointer
+			pushQuery.matchesQuery('user', userQuery);
 	      		Parse.Push.send({
 		  		where: pushQuery,
 		  		data: {
@@ -57,7 +78,8 @@ window.onload=function(){
 		  		error: function(error){
 		      			console.log("Error: "+error.value);
 		  		}
-	      		});	          
+	      		});     
+    
 	  	},
 	  		error: function(al, error) {
 	      			console.log(error.message);
@@ -65,6 +87,7 @@ window.onload=function(){
 	      			// error is a Parse.Error with an error code and message.
 	  		}
       		});
+
    }
 
 }

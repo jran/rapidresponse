@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseUser;
+import com.parse.ParseInstallation;
 
 
 /**
@@ -109,23 +110,6 @@ public class Main extends Activity {
         View focusView = null;
 
 
-        /*// Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            //mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }*/
         final Context s = this;
 
         if (cancel) {
@@ -141,6 +125,10 @@ public class Main extends Activity {
 
                 public void done(ParseUser user, com.parse.ParseException e) {
                     if (user != null) {
+
+                        ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
+                        currentInstall.set("User",ParseUser.getCurrentUser());
+                        currentInstall.saveInBackground();
                         Intent i = new Intent(s, Homepage.class);
                         startActivityForResult(i, 1);
                     }
