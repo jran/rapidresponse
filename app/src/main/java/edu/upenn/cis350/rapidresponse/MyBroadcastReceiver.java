@@ -19,7 +19,7 @@ public class MyBroadcastReceiver extends ParsePushBroadcastReceiver {
     Notification myNotification;
     @Override
     public void onReceive(Context c, Intent i) {
-        PendingIntent pi = PendingIntent.getBroadcast(c, 0, new Intent("com.example.andtip"),0 );
+        PendingIntent pi = PendingIntent.getBroadcast(c, 0, new Intent("Emergency.class"),0 );
         myNotification=new NotificationCompat.Builder(c)
                 .setContentTitle("This is a notification that uses a custom sound.")
                 .setContentText("Notification")
