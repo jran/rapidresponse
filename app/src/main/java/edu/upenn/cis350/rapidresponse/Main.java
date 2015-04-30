@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -80,9 +81,16 @@ public class Main extends Activity {
 
         ParseUser user = ParseUser.getCurrentUser();
         if (user != null) {
+            ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
+            Log.v("XXXXXXXXX", currentInstall.getInstallationId());
+            currentInstall.put("user",ParseUser.getCurrentUser());
+            currentInstall.put("client",ParseUser.getCurrentUser().getObjectId());
+            currentInstall.saveInBackground();
+            currentInstall.saveEventually();
 
-                Intent i = new Intent(this, Homepage.class);
-                startActivityForResult(i, 1);
+
+            Intent i = new Intent(this, Homepage.class);
+            startActivityForResult(i, 1);
 
         }
     }
@@ -125,10 +133,12 @@ public class Main extends Activity {
 
                 public void done(ParseUser user, com.parse.ParseException e) {
                     if (user != null) {
-
                         ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
-                        currentInstall.put("User",ParseUser.getCurrentUser());
+                        currentInstall.put("user",ParseUser.getCurrentUser());
+                        currentInstall.put("client",ParseUser.getCurrentUser().getObjectId());
                         currentInstall.saveInBackground();
+                        currentInstall.saveEventually();
+
                         Intent i = new Intent(s, Homepage.class);
                         startActivityForResult(i, 1);
                     }
@@ -144,15 +154,6 @@ public class Main extends Activity {
             });
         }
     }
-
-    private boolean isEmailValid(String email) {
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() > 4;
-    }
-
 
     public void onRegisterButtonClick(View view) {
 

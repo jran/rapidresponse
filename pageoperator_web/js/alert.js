@@ -1,9 +1,9 @@
 window.onload=function(){
-	document.getElementById('medicine').checked=true;
-	document.getElementById('pharmacist').checked=true;
+	document.getElementById('Medicine Resident').checked=true;
+	document.getElementById('Pharmacist').checked=true;
 	document.getElementById('CCOPS').checked=true;
-	document.getElementById('respiratory').checked=true;
-	document.getElementById('coordinator').checked=true;
+	document.getElementById('Respiratory Therapy').checked=true;
+	document.getElementById('Coordinator').checked=true;
 	document.getElementById('form-alert').onsubmit=function() {
 		event.preventDefault();
       		var location = document.getElementsByName('building');
@@ -43,7 +43,7 @@ window.onload=function(){
 	      		// The object was saved successfully.
 	      		// send push notification
 			var userQuery = new Parse.Query(Parse.User);
-			userQuery.equalTo('Team', emergencyType);
+			userQuery.containedIn('Role', roles);
 			userQuery.containedIn('Building', buildingForQuery);
 /*
 			userQuery.find({
@@ -62,7 +62,7 @@ window.onload=function(){
 	      		var pushQuery = new Parse.Query(Parse.Installation);
            	 	pushQuery.exists("User"); // filter out installations without users
             		pushQuery.include('User'); // expand the user pointer
-			pushQuery.matchesQuery('User', userQuery);
+			pushQuery.matchesQuery('user', userQuery);
 	      		Parse.Push.send({
 		  		where: pushQuery,
 		  		data: {
@@ -78,7 +78,8 @@ window.onload=function(){
 		  		error: function(error){
 		      			console.log("Error: "+error.value);
 		  		}
-	      		});     
+	      		});   
+  
     
 	  	},
 	  		error: function(al, error) {
@@ -101,14 +102,14 @@ function toggle(source) {
 }
 function roles(s){
 	selection = s.value; 
-	medical = document.getElementById('medicine');
-	surgical = document.getElementById('surgical');
-	pharmacist = document.getElementById('pharmacist');
-	ob = document.getElementById('ob');
+	medical = document.getElementById('Medicine Resident');
+	surgical = document.getElementById('Surgical Resident');
+	pharmacist = document.getElementById('Pharmacist');
+	ob = document.getElementById('OB Resident');
 	ccops = document.getElementById('CCOPS');
-	respiratory = document.getElementById('respiratory');
-	anesthesia = document.getElementById('anesthesia');
-	coordinator = document.getElementById('coordinator');
+	respiratory = document.getElementById('Respiratory Therapy');
+	anesthesia = document.getElementById('Anesthesia');
+	coordinator = document.getElementById('Coordinator');
    	switch(selection){
        		case 'Medical Rapid Response':
          		medical.checked = true;
@@ -153,7 +154,7 @@ function roles(s){
        		case 'Code Call':
          		medical.checked = true;
 			surgical.checked = true;
-         		ob.checked = false;
+         		ob.checked = true;
 			pharmacist.checked = true;
          		ccops.checked = true;
 			respiratory.checked = true;
