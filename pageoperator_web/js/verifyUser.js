@@ -10,7 +10,6 @@ function verifyUser() {
     var currentUser = Parse.User.current();
   if (currentUser) {
     // do stuff with the user
-    window.location = "home.html";
   } else {
      // show the signup or login page
      window.location = "login.html";
