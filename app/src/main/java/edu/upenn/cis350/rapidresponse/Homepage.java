@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
@@ -47,7 +48,6 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
 
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
         currUser = ParseUser.getCurrentUser();
-        updateUserInstallation();
         Spinner spinner = (Spinner) findViewById(R.id.location_info);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -64,22 +64,6 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
 
         displayNotifications();
 
-    }
-    private void updateUserInstallation(){
-        ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
-        Log.v("XXXXXXXXX", currentInstall.getInstallationId());
-        currentInstall.put("user", ParseUser.getCurrentUser());
-        Log.v("XXXXXXXXXXX", ParseUser.getCurrentUser().toString());
-        Log.v("XXXXXXXXXXXXX", currentInstall.get("user").toString());
-        currentInstall.saveInBackground((new SaveCallback() {
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.v("HOMEPAGESSSSSSSSSSSSSSS", e.getMessage());
-                } else {
-                    Log.v("HOMEPAGESSSSSSSSSSSSSSS", "NO PROBLEM HERE");
-                }
-            }
-        }));
     }
     private void displayNotifications(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Alert");
@@ -161,7 +145,8 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
     }
 
     public void onLogoutButtonClick(View view){
-
+        ParseUser.getCurrentUser().put("LoggedIn", false);
+        ParseUser.getCurrentUser().saveInBackground();
         ParseUser.getCurrentUser().logOut();
         Intent i = new Intent(this, Main.class);
         startActivityForResult(i, 1);

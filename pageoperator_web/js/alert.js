@@ -45,6 +45,7 @@ window.onload=function(){
 			var userQuery = new Parse.Query(Parse.User);
 			userQuery.containedIn('Role', roles);
 			userQuery.containedIn('Building', buildingForQuery);
+			userQuery.equalTo('LoggedIn', true);
 /*
 			userQuery.find({
 				success: function(users) {
@@ -57,11 +58,11 @@ window.onload=function(){
     					alert("Error: " + " " + error.message);
   				}
 			});
-*/
 
+*/
 	      		var pushQuery = new Parse.Query(Parse.Installation);
-           	 	pushQuery.exists("User"); // filter out installations without users
-            		pushQuery.include('User'); // expand the user pointer
+           	 	pushQuery.exists("user"); // filter out installations without users
+            		pushQuery.include('user'); // expand the user pointer
 			pushQuery.matchesQuery('user', userQuery);
 	      		Parse.Push.send({
 		  		where: pushQuery,
@@ -79,7 +80,7 @@ window.onload=function(){
 		      			console.log("Error: "+error.value);
 		  		}
 	      		});   
-  
+
     
 	  	},
 	  		error: function(al, error) {

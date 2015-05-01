@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.ParseInstallation;
 import com.parse.SaveCallback;
@@ -160,17 +161,30 @@ public class Main extends Activity {
     }
 
     private void updateUserInstallation(){
-        ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
-        Log.v("XXXXXXXXX", currentInstall.getInstallationId());
-        currentInstall.put("user", ParseUser.getCurrentUser());
-        Log.v("XXXXXXXXXXX", ParseUser.getCurrentUser().toString());
-        Log.v("XXXXXXXXXXXXX", currentInstall.get("user").toString());
-        currentInstall.saveInBackground((new SaveCallback() {
+        ParseUser.getCurrentUser().put("LoggedIn", true);
+        ParseUser.getCurrentUser().saveInBackground();
+        ParseInstallation.getCurrentInstallation().saveInBackground((new SaveCallback() {
             public void done(ParseException e) {
                 if (e != null) {
-                    Log.v("SSSSSSSSSSSSSSS", e.getMessage());
+                    Log.v("save in background", e.getMessage());
+                }
+            }
+        }));
+        ParsePush.subscribeInBackground("", new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
                 } else {
-                    Log.v("SSSSSSSSSSSSSSS", "NO PROBLEM HERE");
+                    Log.e("com.parse.push", "failed to subscribe for push", e);
+                }
+            }
+        });
+        ParseInstallation.getCurrentInstallation().put("user", ParseUser.getCurrentUser());
+        ParseInstallation.getCurrentInstallation().saveInBackground((new SaveCallback() {
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.v("save in background", e.getMessage());
                 }
             }
         }));
