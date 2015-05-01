@@ -38,8 +38,8 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
     private EditText password2EditText;
     private EditText oldpasswordEditText;
     private String team;
-    private String building;
     private String role;
+    private boolean delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +47,8 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
         setContentView(R.layout.activity_edit);
 
         // Set up the login form.
+        delete = false;
         team = null;
-        building = null;
         role = null;
         firstNameEditText = (EditText) findViewById(R.id.editFirstName);
         lastNameEditText = (EditText) findViewById(R.id.editLastName);
@@ -102,33 +102,23 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
         teamSpinner.setAdapter(adapter);
         if (!compareValue.equals(null)) {
             int spinnerPosition = adapter.getPosition(compareValue);
+            System.out.println(spinnerPosition);
             teamSpinner.setSelection(spinnerPosition);
             spinnerPosition = 0;
         }
         teamSpinner.setOnItemSelectedListener(this);
 
-        compareValue= currentUser.getString("Building");
-        Spinner buildingSpinner = (Spinner)findViewById(R.id.editBuildingSpinner);
-        items = new String[]{"Founders", "Pereleman Center", "Rhoads", "Silverstein"};
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-        buildingSpinner.setAdapter(adapter);
-        if (!compareValue.equals(null)) {
-            int spinnerPosition = adapter.getPosition(compareValue);
-            teamSpinner.setSelection(spinnerPosition);
-            spinnerPosition = 0;
-        }
-        buildingSpinner.setOnItemSelectedListener(this);
-
         compareValue= currentUser.getString("Role");
         Spinner roleSpinner = (Spinner)findViewById(R.id.editRoleSpinner);
-        items = new String[]{"Medicine Resident", "Surgical Resident", "OB Resident", "Pharmacist",
+        String[] items2 = new String[]{"Medicine Resident", "Surgical Resident", "OB Resident", "Pharmacist",
                 "CCOPS", "Respiratory Therapy", "Coordinator", "Anesthesia", "Other"};
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-        roleSpinner.setAdapter(adapter);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items2);
+        roleSpinner.setAdapter(adapter2);
         if (!compareValue.equals(null)) {
-            int spinnerPosition = adapter.getPosition(compareValue);
-            teamSpinner.setSelection(spinnerPosition);
-            spinnerPosition = 0;
+            int spinnerPosition2 = adapter.getPosition(compareValue);
+            System.out.println(spinnerPosition2);
+            teamSpinner.setSelection(spinnerPosition2);
+            spinnerPosition2 = 0;
         }
         roleSpinner.setOnItemSelectedListener(this);
 
@@ -156,9 +146,6 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
             case R.id.editTeamSpinner:
                 team = s;
                 break;
-            case R.id.editBuildingSpinner:
-                building = s;
-                break;
             case R.id.editRoleSpinner:
                 role = s;
                 break;
@@ -182,27 +169,47 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
     public void onDeleteButtonClick(View view){
         ParseUser user = ParseUser.getCurrentUser();
         final Context s = this;
-        final ProgressDialog dialog = new ProgressDialog(EditActivity.this);
-        dialog.setMessage(getString(R.string.progress_delete));
-        dialog.show();
-        ParseUser.logInInBackground(user.getUsername(), oldpasswordEditText.getText().toString().trim(), new LogInCallback() {
-            public void done(ParseUser currentuser, com.parse.ParseException e) {
-                dialog.dismiss();
-                if (currentuser != null) {
-                    currentuser.deleteInBackground();
-                    Intent i = new Intent(s, Main.class);
-                    startActivityForResult(i, 1);
+        if (!delete){
+            final ProgressDialog dialog = new ProgressDialog(EditActivity.this);
+            dialog.setMessage("Verifying Password");
+            dialog.show();
+            ParseUser.logInInBackground(user.getUsername(), oldpasswordEditText.getText().toString().trim(), new LogInCallback() {
+                public void done(ParseUser currentuser, com.parse.ParseException e) {
+                    dialog.dismiss();
+                    if (currentuser != null) {
+                        Toast.makeText(s, "Press delete again if you are sure you want to delete this account", Toast.LENGTH_LONG).show();
+                        delete = true;
+                    } else if (e.getMessage().contains("invalid login parameters")) {
+                        Toast.makeText(s, "Invalid password", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(s, "Error", Toast.LENGTH_LONG);
+                    }
                 }
-                if (e == null) {
-                    return;
-                }
-                if (e.getMessage().contains("invalid login parameters")) {
-                    Toast.makeText(s, "Wrong password. Please try again!",
-                            Toast.LENGTH_LONG).show();
-                }
+            });
+        } else {
+            final ProgressDialog dialog = new ProgressDialog(EditActivity.this);
+            dialog.setMessage(getString(R.string.progress_delete));
+            dialog.show();
+            ParseUser.logInInBackground(user.getUsername(), oldpasswordEditText.getText().toString().trim(), new LogInCallback() {
+                public void done(ParseUser currentuser, com.parse.ParseException e) {
+                    dialog.dismiss();
+                    if (currentuser != null) {
+                        currentuser.deleteInBackground();
+                        currentuser.logOut();
+                        Intent i = new Intent(s, Main.class);
+                        startActivityForResult(i, 1);
+                    }
+                    if (e == null) {
+                        return;
+                    }
+                    if (e.getMessage().contains("invalid login parameters")) {
+                        Toast.makeText(s, "Wrong password. Please try again!",
+                                Toast.LENGTH_LONG).show();
+                    }
 
-            }
-        });
+                }
+            });
+        }
     }
 
     public void attemptSave() {
@@ -271,11 +278,6 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
                         ParsePush.subscribeInBackground(user.getString("Team"));
                         user.put("Team", team);
                         ParsePush.subscribeInBackground(team);
-                    }
-                    if (building != null) {
-                        ParsePush.subscribeInBackground(user.getString("Building"));
-                        user.put("Building", building);
-                        ParsePush.subscribeInBackground(building);
                     }
                     if (role != null) {
                         ParsePush.subscribeInBackground(user.getString("Role"));

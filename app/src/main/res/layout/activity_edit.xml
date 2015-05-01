@@ -85,14 +85,6 @@
                     />
 
                 <Spinner
-                    android:prompt="@string/prompt_new_building"
-                    android:id="@+id/editBuildingSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="25pt"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" />
-
-                <Spinner
                     android:prompt="@string/prompt_new_role"
                     android:id="@+id/editRoleSpinner"
                     android:layout_width="match_parent"

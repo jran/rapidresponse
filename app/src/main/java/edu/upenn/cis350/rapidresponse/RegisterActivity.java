@@ -93,7 +93,7 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
             }
         });
         Spinner teamSpinner = (Spinner)findViewById(R.id.teamSpinner);
-        String[] items = new String[]{"Medical Rapid Response", "Surgical Rapid Response", "OB Emergency", "Anesthesia Stat", "Airway Emergency"};
+        String[] items = new String[]{"Medical Rapid Response", "Surgical Rapid Response", "OB Emergency", "Anesthesia Stat", "Code Call", "Airway Emergency"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         teamSpinner.setAdapter(adapter);
         teamSpinner.setOnItemSelectedListener(this);
@@ -223,6 +223,8 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         user.setUsername(email);
         user.setPassword(password1);
         user.setEmail(email);
+        user.put("FirstName", firstname);
+        user.put("LastName", lastname);
         user.put("Phone", phone);
         user.put("Team", team);
         user.put("Building", building);
