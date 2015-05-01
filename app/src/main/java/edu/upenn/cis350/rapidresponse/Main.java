@@ -85,8 +85,10 @@ public class Main extends Activity {
 
         ParseUser user = ParseUser.getCurrentUser();
         if (user != null) {
-
-            updateUserInstallation();
+            final ProgressDialog dialog = new ProgressDialog(Main.this);
+            dialog.setMessage("Signing in");
+            dialog.show();
+            updateUserInstallation(dialog);
 
             Intent i = new Intent(this, Homepage.class);
             startActivityForResult(i, 1);
@@ -133,17 +135,18 @@ public class Main extends Activity {
             dialog.show();
             ParseUser.logInInBackground(email, password, new LogInCallback() {
                 public void done(ParseUser user, com.parse.ParseException e) {
-                    dialog.dismiss();
                     if (user != null) {
-                        updateUserInstallation();
+                        updateUserInstallation(dialog);
 
                         Intent i = new Intent(s, Homepage.class);
                         startActivityForResult(i, 1);
                     }
                     if (e == null) {
+                        dialog.dismiss();
                         return;
                     }
                     if (e.getMessage().contains("invalid login parameters")) {
+                        dialog.dismiss();
                         Toast.makeText(s, "Wrong email or password. Please try again!",
                                 Toast.LENGTH_LONG).show();
                     }
@@ -160,7 +163,8 @@ public class Main extends Activity {
         startActivityForResult(i, 1);
     }
 
-    private void updateUserInstallation(){
+    private void updateUserInstallation(ProgressDialog d){
+        final ProgressDialog dialog = d;
         ParseUser.getCurrentUser().put("LoggedIn", true);
         ParseUser.getCurrentUser().saveInBackground();
         ParseInstallation.getCurrentInstallation().saveInBackground((new SaveCallback() {
@@ -173,6 +177,7 @@ public class Main extends Activity {
         ParsePush.subscribeInBackground("", new SaveCallback() {
             @Override
             public void done(ParseException e) {
+                dialog.dismiss();
                 if (e == null) {
                     Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
                 } else {
