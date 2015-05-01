@@ -36,7 +36,7 @@ window.onload=function(){
       		newAlert.set("Building", buildings);
       		newAlert.set("EmergencyType", emergencyType);
       		newAlert.set("Phone", phone);
-		newAlert.set("Roles", roles);
+			newAlert.set("Roles", roles);
       		newAlert.save(null, {
 	  		success: function(al) {
 	      		console.log(al.id+" saved successfully");

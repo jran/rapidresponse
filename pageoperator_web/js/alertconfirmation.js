@@ -36,8 +36,90 @@ window.onload=function(){
   		}
 	});
 	setInterval(function(){ checkResponse(query, alertid);}, 3000);
-}
+};
+function secondNotify(numb) {
+	//Get building and alert information
+	var alertid = window.location.search.split("?")[1];
+	var submitAlert = Parse.Object.extend("Alert");
+	var query = new Parse.Query(submitAlert);
 
+	query.get(alertid, {
+  		success: function(object) {
+			var emergencyType = object.get("EmergencyType");
+			var detailInfo = object.get("Description");
+			var roomInfo =  object.get("Location");
+			var buildingInfo = object.get("Building");
+			var phoneInfo = object.get("Phone");
+
+			//Get building(s) so that alert is not sent to same people
+			var buildings = object.get("Building");
+			alert(buildings);
+			var buildingsAlerted = buildings.split(",");
+			var allBuildings = ["Founders", "Perelemen Center", "Rhoads", "Silverstein"];
+			var buildingForQuery = [];
+			for(var i = 0; i < allBuildings.length; i++) {
+				var alerted = false;
+				for(var k = 0; k < buildingsAlerted.length; k++) {
+					if (allBuildings[i] == buildingsAlerted[k])
+						alerted = true;
+				}
+
+				if (!alerted) {
+					buildingForQuery.push(allBuildings[i]);
+				}
+			}
+			alert(buildingForQuery);
+			//Get Role
+			var role = "";
+				if (numb == 1) {
+					role = "Medicine Resident";
+				} else if (numb == 2) {
+					role = "Surgical Resident";
+				} else if (numb == 3) {
+					role = "OB Resident";
+				} else if (numb == 4) {
+					role = "Pharmacist";
+				} else if (numb == 5) {
+					role = "CCOPS";
+				} else if (numb == 6) {
+					role = "Respiratory Therapist";
+				} else if (numb == 7) {
+					role = "Coordinator";
+				} else {
+					role = "Anesthesia";
+				}	
+
+				//Execute Query
+				var userQuery = new Parse.Query(Parse.User);
+				userQuery.equalTo('Role', role);
+				userQuery.containedIn('Building', buildingForQuery);
+
+				var pushQuery = new Parse.Query(Parse.Installation);
+				pushQuery.exists("user"); // filter out installations without users
+			 	pushQuery.include('user'); // expand the user pointer
+				pushQuery.matchesQuery('user', userQuery);
+				Parse.Push.send({
+					where: pushQuery,
+					data: {
+						alert: emergencyType + " in "+ roomInfo+". Details: "+ detailInfo +"\nContact:"+phoneInfo,
+						ObjectID: alertid,
+						}
+					}, {
+						success: function(){
+							console.log("Push was successful");
+							alert("Alert Sent. Monitor Responses?");
+							window.location = './afteralert.html?'+al.id; 
+						},
+						error: function(error){
+							console.log("Error: "+error.value);
+						}
+				});
+		},
+  		error: function(object, error) {
+    			alert("Error: " + error.code + " " + error.message);
+  		}
+  	});
+}
 function checkResponse(query, alertid){
 	query.get(alertid, {
   			success: function(object) {
