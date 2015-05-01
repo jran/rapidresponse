@@ -31,7 +31,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
     private EditText phoneEditText;
     private EditText password1EditText;
     private EditText password2EditText;
-    private String team;
     private String building;
     private String role;
 
@@ -41,7 +40,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         setContentView(R.layout.activity_register);
 
         // Set up the login form.
-        team = null;
         building = null;
         role = null;
         firstNameEditText = (EditText) findViewById(R.id.firstName);
@@ -92,16 +90,13 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
                 }
             }
         });
-        Spinner teamSpinner = (Spinner)findViewById(R.id.teamSpinner);
-        String[] items = new String[]{"Medical Rapid Response", "Surgical Rapid Response", "OB Emergency", "Anesthesia Stat", "Code Call", "Airway Emergency"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-        teamSpinner.setAdapter(adapter);
-        teamSpinner.setOnItemSelectedListener(this);
+
         Spinner buildingSpinner = (Spinner)findViewById(R.id.buildingSpinner);
-        items = new String[]{"Founders", "Pereleman Center", "Rhoads", "Silverstein"};
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+        String[] items = new String[]{"Founders", "Pereleman Center", "Rhoads", "Silverstein"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         buildingSpinner.setAdapter(adapter);
         buildingSpinner.setOnItemSelectedListener(this);
+
         Spinner roleSpinner = (Spinner)findViewById(R.id.roleSpinner);
         items = new String[]{"Medicine Resident", "Surgical Resident", "OB Resident", "Pharmacist",
             "CCOPS", "Respiratory Therapy", "Coordinator", "Anesthesia", "Other"};
@@ -122,9 +117,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
                                int pos, long id) {
         String s = parent.getItemAtPosition(pos).toString();
         switch (parent.getId()) {
-            case R.id.teamSpinner:
-                team = s;
-                break;
             case R.id.buildingSpinner:
                 building = s;
                 break;
@@ -189,10 +181,6 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
             validationError = true;
             validationErrorMessage.append(getString(R.string.error_incorrect_password)+"\n");
         }
-        if (team == null) {
-            validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_team)+"\n");
-        }
         if (building == null) {
             validationError = true;
             validationErrorMessage.append(getString(R.string.error_blank_building)+"\n");
@@ -226,12 +214,8 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         user.put("FirstName", firstname);
         user.put("LastName", lastname);
         user.put("Phone", phone);
-        user.put("Team", team);
         user.put("Building", building);
         user.put("Role", role);
-
-        ParsePush.subscribeInBackground(building);
-        ParsePush.subscribeInBackground(team);
 
         // Call the Parse signup method
         user.signUpInBackground(new SignUpCallback() {

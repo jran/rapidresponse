@@ -37,7 +37,6 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
     private EditText password1EditText;
     private EditText password2EditText;
     private EditText oldpasswordEditText;
-    private String team;
     private String role;
     private boolean delete;
 
@@ -48,7 +47,6 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
 
         // Set up the login form.
         delete = false;
-        team = null;
         role = null;
         firstNameEditText = (EditText) findViewById(R.id.editFirstName);
         lastNameEditText = (EditText) findViewById(R.id.editLastName);
@@ -95,29 +93,15 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
 
         ParseUser currentUser = ParseUser.getCurrentUser();
 
-        String compareValue= currentUser.getString("Team");
-        Spinner teamSpinner = (Spinner)findViewById(R.id.editTeamSpinner);
-        String[] items = new String[]{"Medical Rapid Response", "Surgical Rapid Response", "OB Emergency", "Anesthesia Stat", "Code Call", "Airway Emergency"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-        teamSpinner.setAdapter(adapter);
-        if (!compareValue.equals(null)) {
-            int spinnerPosition = adapter.getPosition(compareValue);
-            System.out.println(spinnerPosition);
-            teamSpinner.setSelection(spinnerPosition);
-            spinnerPosition = 0;
-        }
-        teamSpinner.setOnItemSelectedListener(this);
-
-        compareValue= currentUser.getString("Role");
+        String compareValue= currentUser.getString("Role");
         Spinner roleSpinner = (Spinner)findViewById(R.id.editRoleSpinner);
         String[] items2 = new String[]{"Medicine Resident", "Surgical Resident", "OB Resident", "Pharmacist",
                 "CCOPS", "Respiratory Therapy", "Coordinator", "Anesthesia", "Other"};
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items2);
-        roleSpinner.setAdapter(adapter2);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items2);
+        roleSpinner.setAdapter(adapter);
         if (!compareValue.equals(null)) {
             int spinnerPosition2 = adapter.getPosition(compareValue);
-            System.out.println(spinnerPosition2);
-            teamSpinner.setSelection(spinnerPosition2);
+            roleSpinner.setSelection(spinnerPosition2);
             spinnerPosition2 = 0;
         }
         roleSpinner.setOnItemSelectedListener(this);
@@ -142,14 +126,7 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         String s = parent.getItemAtPosition(pos).toString();
-        switch (parent.getId()) {
-            case R.id.editTeamSpinner:
-                team = s;
-                break;
-            case R.id.editRoleSpinner:
-                role = s;
-                break;
-        }
+        role = s;
     }
 
     @Override
@@ -273,11 +250,6 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
                     }
                     if (password1.length() != 0) {
                         user.setPassword(password1);
-                    }
-                    if (team != null) {
-                        ParsePush.subscribeInBackground(user.getString("Team"));
-                        user.put("Team", team);
-                        ParsePush.subscribeInBackground(team);
                     }
                     if (role != null) {
                         ParsePush.subscribeInBackground(user.getString("Role"));
