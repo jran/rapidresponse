@@ -4,8 +4,6 @@ $(function() {
     Parse.$ = jQuery;
  
     Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
-}); 
-
     $('.login-form').on('submit', function(e) {
       // Prevent Default Submit Event
       e.preventDefault();
@@ -17,14 +15,16 @@ $(function() {
    
       // Call Parse Login function with those variables
       Parse.User.logIn(username, password, {
-          // If the username and password matches
+          //Client has successfully logged in
           success: function(user) {
-              alert('Welcome!');
+            window.location = "home.html";
           },
-          // If there is an error
+          //Incorrect login credentials
           error: function(user, error) {
               console.log(error);
+              //If failed stay on login page, tell user login credentials incorrect
+              window.location = "createalert.html";
           }
     });
-
+  });
 });
