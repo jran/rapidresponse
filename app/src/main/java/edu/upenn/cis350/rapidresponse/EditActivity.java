@@ -182,7 +182,7 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
                     } else if (e.getMessage().contains("invalid login parameters")) {
                         Toast.makeText(s, "Invalid password", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(s, "Error", Toast.LENGTH_LONG);
+                        Toast.makeText(s, e.getMessage(), Toast.LENGTH_LONG);
                     }
                 }
             });

@@ -1,6 +1,7 @@
 package edu.upenn.cis350.rapidresponse;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -126,9 +127,12 @@ public class Main extends Activity {
             // perform the user login attempt.
             // To go from one activity to another, create an Intent using the current Activity and the Class to be created
             //check login
+            final ProgressDialog dialog = new ProgressDialog(Main.this);
+            dialog.setMessage("Signing in");
+            dialog.show();
             ParseUser.logInInBackground(email, password, new LogInCallback() {
-
                 public void done(ParseUser user, com.parse.ParseException e) {
+                    dialog.dismiss();
                     if (user != null) {
                         updateUserInstallation();
 
