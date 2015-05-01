@@ -2,17 +2,13 @@ package edu.upenn.cis350.rapidresponse;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.Parse;
@@ -28,6 +24,7 @@ import java.util.Date;
 
 /**
  * Created by elianamason on 4/21/15.
+ *
  */
 public class Emergency extends Activity {
     public String EMERGENCY_ID = null;
@@ -47,7 +44,7 @@ public class Emergency extends Activity {
         currUser = ParseUser.getCurrentUser();
         if(currUser==null){
             Intent i = new Intent(Emergency.this, Homepage.class);
-            startActivity(intent);
+            startActivity(i);
         }
         displayInformation();
         checkResponse();
@@ -88,7 +85,6 @@ public class Emergency extends Activity {
                             Button decline = (Button) findViewById(R.id.decline);
                             decline.setBackgroundColor(16771304);
                             decline.setText("DECLINED");
-                            return;
                         }
                     }
 

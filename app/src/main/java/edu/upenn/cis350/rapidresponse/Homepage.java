@@ -13,26 +13,19 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.parse.DeleteCallback;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.Parse;
-import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by elianamason on 4/9/15.
+ *
  */
 public class Homepage extends Activity implements AdapterView.OnItemSelectedListener {
     public final static String EMERG_ID = "edu.upenn.cis350.rapidresponse.MESSAGE";
@@ -44,8 +37,6 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
-
-        Intent intent = getIntent();
 
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
         currUser = ParseUser.getCurrentUser();
@@ -68,7 +59,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
     }
     private void displayNotifications(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Alert");
-        query.whereEqualTo("Roles",currUser.get("Role"));
+        query.whereEqualTo("Roles", currUser.get("Role"));
         query.whereContains("Building", currUser.get("Building").toString());
         query.orderByDescending("createdAt");
         query.setLimit(5);
@@ -106,6 +97,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         b = (Button) findViewById(R.id.button5);
         b.setText("");
     }
+
     @TargetApi(11)
     private void populateButtons(List<ParseObject> emergencies){
         for(int i = 0; i<emergencies.size(); i++){
@@ -121,10 +113,12 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
             else if(i==4) button = (Button)findViewById(R.id.button5);
             else Log.d("Button Identification", "FAILED TO IDENTIFY");
 
-            button.setText(description);
-            String object_id = emergency.getObjectId();
-            button.setTag(R.id.unique_id, object_id);
-            Log.d("Unique ID Set", object_id);
+            if(button != null) {
+                button.setText(description);
+                String object_id = emergency.getObjectId();
+                button.setTag(R.id.unique_id, object_id);
+                Log.d("Unique ID Set", object_id);
+            }
         }
     }
 
@@ -151,7 +145,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         dialog.show();
         ParseUser.getCurrentUser().put("LoggedIn", false);
         ParseUser.getCurrentUser().saveInBackground();
-        ParseUser.getCurrentUser().logOut();
+        ParseUser.logOut();
         Intent i = new Intent(this, Main.class);
         dialog.dismiss();
         startActivityForResult(i, 1);

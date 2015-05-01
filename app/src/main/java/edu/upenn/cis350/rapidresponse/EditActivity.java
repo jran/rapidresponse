@@ -4,16 +4,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,7 +20,6 @@ import com.parse.ParseException;
 import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -104,12 +100,11 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
         Spinner roleSpinner = (Spinner)findViewById(R.id.editRoleSpinner);
         String[] items2 = new String[]{"Medicine Resident", "Surgical Resident", "OB Resident", "Pharmacist",
                 "CCOPS", "Respiratory Therapy", "Coordinator", "Anesthesia", "Other"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items2);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items2);
         roleSpinner.setAdapter(adapter);
-        if (!compareValue.equals(null)) {
+        if (compareValue != null) {
             int spinnerPosition2 = adapter.getPosition(compareValue);
             roleSpinner.setSelection(spinnerPosition2);
-            spinnerPosition2 = 0;
         }
         roleSpinner.setOnItemSelectedListener(this);
 
@@ -132,8 +127,7 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        String s = parent.getItemAtPosition(pos).toString();
-        role = s;
+        role = parent.getItemAtPosition(pos).toString();
     }
 
     @Override
@@ -166,7 +160,7 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
                     } else if (e.getMessage().contains("invalid login parameters")) {
                         Toast.makeText(s, "Invalid password", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(s, e.getMessage(), Toast.LENGTH_LONG);
+                        Toast.makeText(s, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -179,7 +173,7 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
                     dialog.dismiss();
                     if (currentuser != null) {
                         currentuser.deleteInBackground();
-                        currentuser.logOut();
+                        ParseUser.logOut();
                         Intent i = new Intent(s, Main.class);
                         startActivityForResult(i, 1);
                     }
@@ -209,19 +203,23 @@ public class EditActivity extends Activity implements AdapterView.OnItemSelected
         StringBuilder validationErrorMessage = new StringBuilder(getString(R.string.error_intro)+"\n");
         if (!email.contains("@") && email.length() != 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_invalid_email)+"\n");
+            validationErrorMessage.append(getString(R.string.error_invalid_email));
+            validationErrorMessage.append("\n");
         }
         if (!matcher.matches() && phone.length() != 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_invalid_phone)+"\n");
+            validationErrorMessage.append(getString(R.string.error_invalid_phone));
+            validationErrorMessage.append("\n");
         }
         if (password1.length() < 5 && password1.length() != 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_invalid_password)+"\n");
+            validationErrorMessage.append(getString(R.string.error_invalid_password));
+            validationErrorMessage.append("\n");
         }
         if (!password1.equals(password2)) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_incorrect_password)+"\n");
+            validationErrorMessage.append(getString(R.string.error_incorrect_password));
+            validationErrorMessage.append("\n");
         }
 
         if (validationError) {

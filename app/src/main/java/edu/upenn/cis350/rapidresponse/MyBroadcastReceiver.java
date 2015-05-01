@@ -4,16 +4,14 @@ import com.parse.ParsePushBroadcastReceiver;
 
 import android.content.Context;
 import android.content.Intent;
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.media.MediaPlayer;
 import org.json.JSONObject;
 import android.util.Log;
 import android.app.PendingIntent;
-import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 /**
  * Created by jran on 2015/4/29.
+ *
  */
 public class MyBroadcastReceiver extends ParsePushBroadcastReceiver {
     private static final int MY_NOTIFICATION_ID=1;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="details">Emergency Details</string>
+    <string name="description">Description</string>
+    <string name="building">Building</string>
+    <string name="location">Location</string>
+    <string name="time">Time Created: </string>
+    <string name="decline">Incapacitated</string>
+    <string name="accept">Accept</string>
+    <string name="info">For more information, call:t</string>
+    <string name="call">Call</string>
+    <string name="returns">Return</string>
+</resources>

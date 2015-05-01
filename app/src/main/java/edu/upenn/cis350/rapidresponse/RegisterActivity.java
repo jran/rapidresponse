@@ -15,9 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -93,14 +91,14 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
 
         Spinner buildingSpinner = (Spinner)findViewById(R.id.buildingSpinner);
         String[] items = new String[]{"Founders", "Pereleman Center", "Rhoads", "Silverstein"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
         buildingSpinner.setAdapter(adapter);
         buildingSpinner.setOnItemSelectedListener(this);
 
         Spinner roleSpinner = (Spinner)findViewById(R.id.roleSpinner);
         items = new String[]{"Medicine Resident", "Surgical Resident", "OB Resident", "Pharmacist",
             "CCOPS", "Respiratory Therapy", "Coordinator", "Anesthesia", "Other"};
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
         roleSpinner.setAdapter(adapter);
         roleSpinner.setOnItemSelectedListener(this);
 
@@ -151,48 +149,59 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         StringBuilder validationErrorMessage = new StringBuilder(getString(R.string.error_intro)+"\n");
         if (firstname.length() == 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_firstname)+"\n");
+            validationErrorMessage.append(getString(R.string.error_blank_firstname));
+            validationErrorMessage.append("\n");
         }
         if (lastname.length() == 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_lastname)+"\n");
+            validationErrorMessage.append(getString(R.string.error_blank_lastname));
+            validationErrorMessage.append("\n");
         }
         if (email.length() == 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_email)+"\n");
+            validationErrorMessage.append(getString(R.string.error_blank_email));
+            validationErrorMessage.append("\n");
         }
         if (phone.length() == 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_phone)+"\n");
+            validationErrorMessage.append(getString(R.string.error_blank_phone));
+            validationErrorMessage.append("\n");
         }
         if (!matcher.matches()) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_invalid_phone)+"\n");
+            validationErrorMessage.append(getString(R.string.error_invalid_phone));
+            validationErrorMessage.append("\n");
         }
         if (password1.length() == 0) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_password)+"\n");
+            validationErrorMessage.append(getString(R.string.error_blank_password));
+            validationErrorMessage.append("\n");
         }
         if (password1.length() < 5) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_invalid_password)+"\n");
+            validationErrorMessage.append(getString(R.string.error_invalid_password));
+            validationErrorMessage.append("\n");
         }
         if (!password1.equals(password2)) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_incorrect_password)+"\n");
+            validationErrorMessage.append(getString(R.string.error_incorrect_password));
+            validationErrorMessage.append("\n");
         }
         if (building == null) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_building)+"\n");
+            validationErrorMessage.append(getString(R.string.error_blank_building));
+            validationErrorMessage.append("\n");
         }
         if (role == null) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_blank_role)+"\n");
+            validationErrorMessage.append(getString(R.string.error_blank_role));
+            validationErrorMessage.append("\n");
         }
         //Ensure email ends in @uphs.upenn.edu
         if (!email.endsWith(uphsEmail) || !email.contains("@")) {
             validationError = true;
-            validationErrorMessage.append(getString(R.string.error_invalid_email)+"\n");
+            validationErrorMessage.append(getString(R.string.error_invalid_email));
+            validationErrorMessage.append("\n");
         }
 
         if (validationError) {

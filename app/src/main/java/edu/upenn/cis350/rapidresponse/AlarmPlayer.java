@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 
 /**
  * Created by jran on 2015/4/30.
+ *
  */
 public class AlarmPlayer {
     private static MediaPlayer mPlayer;

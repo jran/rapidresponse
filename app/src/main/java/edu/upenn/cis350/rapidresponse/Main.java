@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,8 +49,6 @@ public class Main extends Activity {
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +70,6 @@ public class Main extends Activity {
                 return false;
             }
         });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
 
         ParseUser user = ParseUser.getCurrentUser();
         if (user != null) {
@@ -110,44 +103,31 @@ public class Main extends Activity {
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        boolean cancel = false;
-        View focusView = null;
-
-
         final Context s = this;
 
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            // To go from one activity to another, create an Intent using the current Activity and the Class to be created
-            //check login
-            final ProgressDialog dialog = new ProgressDialog(Main.this);
-            dialog.setMessage("Signing in");
-            dialog.show();
-            ParseUser.logInInBackground(email, password, new LogInCallback() {
-                public void done(ParseUser user, com.parse.ParseException e) {
-                    if (user != null) {
-                        updateUserInstallation(dialog);
-                        Intent i = new Intent(s, Homepage.class);
-                        startActivityForResult(i, 1);
-                    } else if (e.getMessage().contains("invalid login parameters")) {
-                        dialog.dismiss();
-                        Toast.makeText(s, "Wrong email or password. Please try again!",
-                                Toast.LENGTH_LONG).show();
-                    } else if (e == null) {
-                        dialog.dismiss();
-                        return;
-                    }  else {
-                        dialog.dismiss();
-                        Toast.makeText(s, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
+        // Show a progress spinner, and kick off a background task to
+        // perform the user login attempt.
+        // To go from one activity to another, create an Intent using the current Activity and the Class to be created
+        //check login
+        final ProgressDialog dialog = new ProgressDialog(Main.this);
+        dialog.setMessage("Signing in");
+        dialog.show();
+        ParseUser.logInInBackground(email, password, new LogInCallback() {
+            public void done(ParseUser user, com.parse.ParseException e) {
+                if (user != null) {
+                    updateUserInstallation(dialog);
+                    Intent i = new Intent(s, Homepage.class);
+                    startActivityForResult(i, 1);
+                } else if (e.getMessage().contains("invalid login parameters")) {
+                    dialog.dismiss();
+                    Toast.makeText(s, "Wrong email or password. Please try again!",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    dialog.dismiss();
+                    Toast.makeText(s, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
-            });
-        }
+            }
+        });
     }
 
     public void onSignInButtonClick(View view){

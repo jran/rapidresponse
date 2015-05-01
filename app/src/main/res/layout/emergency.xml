@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Emergency Details"
+        android:text="@string/details"
         android:id="@+id/emerg_header"
         android:layout_weight="0.17" />
 
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Description"
+        android:text="@string/description"
         android:id="@+id/description"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.04" />
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Building"
+        android:text="@string/building"
         android:id="@+id/build"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.04" />
@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Location"
+        android:text="@string/location"
         android:id="@+id/loc"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.04" />
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Time Created:"
+        android:text="@string/time"
         android:id="@+id/create_time"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.04" />
@@ -78,7 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="For more information, call:"
+        android:text="@string/info"
         android:id="@+id/contact"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.04" />
@@ -86,7 +86,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Call"
+        android:text="@string/call"
         android:id="@+id/btncall"
         android:layout_gravity="center_horizontal"
         android:background="#ff8afbff"
@@ -95,7 +95,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Return"
+        android:text="@string/returns"
         android:id="@+id/button"
         android:onClick="onReturnClick"
         android:layout_weight="0.07" />
@@ -109,17 +109,19 @@
         android:weightSum="1">
 
         <Button
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="149dp"
             android:layout_height="match_parent"
-            android:text="Incapacitated!"
+            android:text="@string/decline"
             android:id="@+id/decline"
             android:background="#ffff6d66"
             android:onClick="onDeclineButtonClick" />
 
         <Button
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Accept"
+            android:text="@string/accept"
             android:id="@+id/accept"
             android:background="#ffaeff96"
             android:onClick="onAcceptButtonClick" />

@@ -4,6 +4,9 @@
 
 <resources>
 
+    <string name="Ylocation">Your location: </string>
+    <string name="login">Edit Login</string>
+    <string name="logout">Logout</string>
     <string-array name="location_array">
         <item>(Click to Change Building)</item>
         <item>Founders</item>

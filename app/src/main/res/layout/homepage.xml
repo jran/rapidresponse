@@ -8,7 +8,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Login"
+        android:text="@string/login"
         android:id="@+id/edit_login_button"
         android:background="@android:drawable/btn_default"
         android:onClick="onEditClick"/>
@@ -17,14 +17,13 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:text="@string/logout"
         android:id="@+id/logout"
         android:onClick="onLogoutButtonClick"
         android:background="@android:drawable/btn_default" />
 
 
     <Spinner
-        android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/location_info"
@@ -34,7 +33,7 @@
     <TextView
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:text="Your location: "
+        android:text="@string/Ylocation"
         android:id="@+id/location_state"
         android:layout_gravity="center_horizontal" />
 
