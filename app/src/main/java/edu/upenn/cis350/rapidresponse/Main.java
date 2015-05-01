@@ -21,7 +21,10 @@ import com.parse.ParseException;
 import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.ParseInstallation;
+import com.parse.RequestPasswordResetCallback;
 import com.parse.SaveCallback;
+
+import static com.parse.ParseUser.requestPasswordResetInBackground;
 
 
 /**
@@ -69,14 +72,6 @@ public class Main extends Activity {
                     return true;
                 }
                 return false;
-            }
-        });
-
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
             }
         });
 
@@ -137,23 +132,41 @@ public class Main extends Activity {
                 public void done(ParseUser user, com.parse.ParseException e) {
                     if (user != null) {
                         updateUserInstallation(dialog);
-
                         Intent i = new Intent(s, Homepage.class);
                         startActivityForResult(i, 1);
-                    }
-                    if (e == null) {
-                        dialog.dismiss();
-                        return;
-                    }
-                    if (e.getMessage().contains("invalid login parameters")) {
+                    } else if (e.getMessage().contains("invalid login parameters")) {
                         dialog.dismiss();
                         Toast.makeText(s, "Wrong email or password. Please try again!",
                                 Toast.LENGTH_LONG).show();
+                    } else if (e == null) {
+                        return;
+                    }  else {
+                        Toast.makeText(s, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
-
                 }
             });
         }
+    }
+
+    public void onSignInButtonClick(View view){
+        attemptLogin();
+    }
+
+    public void onForgotPasswordButtonClick(View view){
+        final ProgressDialog dialog = new ProgressDialog(Main.this);
+        dialog.setMessage("Verifying Email");
+        dialog.show();
+        final Context s = this;
+        requestPasswordResetInBackground(mEmailView.getText().toString().trim(), new RequestPasswordResetCallback() {
+            public void done(ParseException e) {
+                dialog.dismiss();
+                if (e == null) {
+                    Toast.makeText(s, "password reset e-mail has been sent", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(s, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void onRegisterButtonClick(View view) {
@@ -162,6 +175,8 @@ public class Main extends Activity {
         Intent i = new Intent(this, RegisterActivity.class);
         startActivityForResult(i, 1);
     }
+
+
 
     private void updateUserInstallation(ProgressDialog d){
         final ProgressDialog dialog = d;

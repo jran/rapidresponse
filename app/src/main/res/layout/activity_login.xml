@@ -22,12 +22,12 @@
                 android:layout_height="wrap_content" android:orientation="vertical">
 
                 <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="Don't forget email!"
+                    android:layout_height="wrap_content" android:hint="Email"
                     android:inputType="textEmailAddress" android:maxLines="1"
                     android:singleLine="true" />
 
                 <EditText android:id="@+id/password" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="Don't forget password!"
+                    android:layout_height="wrap_content" android:hint="Password"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified" android:inputType="textPassword"
@@ -36,13 +36,22 @@
                 <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="16dp" android:text="@string/action_sign_in"
-                    android:textStyle="bold" />
-
+                    android:textStyle="bold"
+                    android:onClick="onSignInButtonClick"/>
             </LinearLayout>
+
+            <LinearLayout android:id="@+id/Forgot_Password" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <Button android:id="@+id/forgot_password_button" style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" android:text="Forgot Password"
+                    android:textStyle="bold"
+                    android:onClick="onForgotPasswordButtonClick"/>
+            </LinearLayout>
+
+
             <LinearLayout android:id="@+id/register" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:orientation="vertical">
-
-
                 <Button android:id="@+id/register_button" style="?android:textAppearanceSmall"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="16dp" android:text="Register"
