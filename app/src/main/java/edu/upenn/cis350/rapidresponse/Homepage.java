@@ -2,6 +2,7 @@ package edu.upenn.cis350.rapidresponse;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -145,10 +146,14 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
     }
 
     public void onLogoutButtonClick(View view){
+        final ProgressDialog dialog = new ProgressDialog(Homepage.this);
+        dialog.setMessage("Signing in");
+        dialog.show();
         ParseUser.getCurrentUser().put("LoggedIn", false);
         ParseUser.getCurrentUser().saveInBackground();
         ParseUser.getCurrentUser().logOut();
         Intent i = new Intent(this, Main.class);
+        dialog.dismiss();
         startActivityForResult(i, 1);
     }
 
