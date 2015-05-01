@@ -61,13 +61,16 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
 
             @Override
             public void afterTextChanged(Editable s) {
-                System.out.println(flag);
                 if(flag) {
+                    int position = phoneEditText.getSelectionStart();
                     String number = s.toString();
                     int i = 0;
                     while (i < number.length()) {
                         if (number.charAt(i) == '-' && i != number.length()) {
                             number = number.substring(0, i) + number.substring(i+1, number.length());
+                            if(i <= position){
+                                position--;
+                            }
                         } else if (number.charAt(i) == '-') {
                             number = number.substring(0, i);
                         }
@@ -76,10 +79,13 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
                     if(number.length() != 10){
                         flag = false;
                         phoneEditText.setText(number);
+                        phoneEditText.setSelection(position);
                     } else if (number.length() == 10) {
                         number = number.substring(0, 3) + "-" + number.substring(3, 6) + "-" + number.substring(6);
                         flag = false;
                         phoneEditText.setText(number);
+                        position = (int) (position + Math.floor(position%4));
+                        phoneEditText.setSelection(position);
                     }
                 } else {
                     flag = true;
