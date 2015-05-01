@@ -17,7 +17,7 @@ $(function() {
       Parse.User.logIn(username, password, {
           //Client has successfully logged in
           success: function(user) {
-            window.location = "home.html";
+            window.location = "createalert.html";
           },
           //Incorrect login credentials
           error: function(user, error) {
