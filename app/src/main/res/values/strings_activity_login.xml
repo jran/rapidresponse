@@ -11,4 +11,5 @@
     <string name="login_invalid_password">This password is too short</string>
     <string name="login_incorrect_password">This password is incorrect</string>
     <string name="login_field_required"> This field is required</string>
+    <string name="title"> Rapid Response System</string>
 </resources>

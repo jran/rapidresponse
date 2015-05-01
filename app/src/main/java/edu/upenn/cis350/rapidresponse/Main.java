@@ -139,8 +139,10 @@ public class Main extends Activity {
                         Toast.makeText(s, "Wrong email or password. Please try again!",
                                 Toast.LENGTH_LONG).show();
                     } else if (e == null) {
+                        dialog.dismiss();
                         return;
                     }  else {
+                        dialog.dismiss();
                         Toast.makeText(s, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }

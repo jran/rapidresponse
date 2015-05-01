@@ -68,7 +68,7 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
     }
     private void displayNotifications(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Alert");
-        query.whereEqualTo("EmergencyType",currUser.get("Team"));
+        query.whereEqualTo("Roles",currUser.get("Role"));
         query.whereContains("Building", currUser.get("Building").toString());
         query.orderByDescending("createdAt");
         query.setLimit(5);
