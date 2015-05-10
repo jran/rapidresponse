@@ -143,8 +143,7 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
         Pattern pattern = Pattern.compile("\\d{3}-\\d{3}-\\d{4}");
         Matcher matcher = pattern.matcher(phone);
         boolean validationError = false;
-        //String uphsEmail = "@uphs.upenn.edu"; //cannot be used yet because no uphs email yet
-        String uphsEmail = ""; //For now
+        String uphsEmail = "@uphs.upenn.edu";
 
         StringBuilder validationErrorMessage = new StringBuilder(getString(R.string.error_intro)+"\n");
         if (firstname.length() == 0) {
