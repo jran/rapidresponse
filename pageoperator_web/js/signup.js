@@ -16,28 +16,33 @@ $(function() {
         password = data[3].value,
         password2 = data[4].value,
         role = "Page Operator";
+        uphs = "@uphs.upenn.edu";
    
-      //Ensure that passwords match
+      //Ensure that passwords match, appropriately long, and uphs
       if (password != password2) {
         alert("Passwords do not match");
-        window.location = "signup.html";
-      }
+      } else if (password.length < 6) {
+        alert("Password not long enough");
+      } else if (email.indexOf(uphs) == -1)  {
+        alert("Email must be a uphs email");
+      } else {
 
-      //Create user and save to parse
-      var user = new Parse.User();     
-      user.set("FirstName", email);
-      user.set("LastName", email);
-      user.set("username", email);
-      user.set("password", password);
-      user.set("email", email);
-      user.set("role", "Page Operator");
-      
-      user.signUp(null, {
-            //Client has successfully logged in
-            success: function(user) {
-              alert("Please check your email for a verification email");
-              window.location = "login.html";
-            }
-    });
+        //Create user and save to parse
+        var user = new Parse.User();     
+        user.set("FirstName", email);
+        user.set("LastName", email);
+        user.set("username", email);
+        user.set("password", password);
+        user.set("email", email);
+        user.set("role", "Page Operator");
+        
+        user.signUp(null, {
+              //Client has successfully logged in
+              success: function(user) {
+                alert("Please check your email for a verification email");
+                window.location = "login.html";
+              }
+         });
+      }
   });
 });
