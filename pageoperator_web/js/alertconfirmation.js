@@ -64,7 +64,6 @@ function secondNotify(numb) {
 
 			//Get building(s) so that alert is not sent to same people
 			var buildings = object.get("Building");
-			alert(buildings);
 			var buildingsAlerted = buildings.split(",");
 			var allBuildings = ["Founders", "Perelemen Center", "Rhoads", "Silverstein"];
 			var buildingForQuery = [];
