@@ -31,6 +31,8 @@
 
     <div class="signup">
       <form class="signup-form" role="form">
+        <input class="form-control" type="text" name="firstname" placeholder="First Name" required="" autofocus="">
+        <input class="form-control" type="text" name="lastname" placeholder="Last Name" required="" autofocus="">
         <input class="form-control" type="text" name="Email" placeholder="Email" required="" autofocus="">
         <input type="password" class="form-control" name="password" placeholder="Password" required="">
         <input type="password" class="form-control" name="password2" placeholder="Reenter Password" required="">
@@ -42,37 +44,6 @@
       </div>
     </div>
   </div>
-
-
-  <script type="text/javascript">
-    $(function() {
-        Parse.$ = jQuery;
-
-      Parse.initialize("MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "kc6tbhjMB2zRYtkicSxjhwQ8CeqKBIHceFkkGdzG");
-    }); 
-
-    $('.form-signup').on('submit', function(e) {
-        // Prevent Default Submit Event
-        e.preventDefault();
-     
-        // Get data from the form and put them into variables
-        var data = $(this).serializeArray(),
-            username = data[0].value,
-            password = data[1].value;
-     
-        // Call Parse Login function with those variables
-        Parse.User.logIn(username, password, {
-            // If the username and password matches
-            success: function(user) {
-                alert('Welcome!');
-            },
-            // If there is an error
-            error: function(user, error) {
-                alert('Failed to login. Please make sure your password and username are correct');
-            }
-        });
-    });
-  </script>
 </body>
 
 </html>
