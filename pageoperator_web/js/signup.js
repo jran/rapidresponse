@@ -34,7 +34,7 @@ $(function() {
         user.set("username", email);
         user.set("password", password);
         user.set("email", email);
-        user.set("role", "Page Operator");
+        user.set("Role", "Page Operator");
         
         user.signUp(null, {
               //Client has successfully logged in
