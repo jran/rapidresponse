@@ -43,9 +43,10 @@ window.onload=function(){
     			alert("Error: " + error.code + " " + error.message);
   		}
 	});
-	//refresh very 3 seconds to check whether anyone responded
+	//refresh every 3 seconds to check whether anyone responded
 	setInterval(function(){ checkResponse(query, alertid);}, 3000);
 };
+
 //helper function to notify the second tier after the first tier declined
 function secondNotify(numb) {
 	//Get building and alert information
