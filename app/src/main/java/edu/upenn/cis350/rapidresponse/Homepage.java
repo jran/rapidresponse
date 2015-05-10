@@ -25,39 +25,61 @@ import java.util.List;
 
 /**
  * Created by elianamason on 4/9/15.
- *
+ * This class allows user to view past notifications that have taken place in their current
+ * building and were aimed at the rapid response team in which they're currently enrolled.
+ * Also gives user the opportunity to change the building in which they are registered.
  */
 public class Homepage extends Activity implements AdapterView.OnItemSelectedListener {
+
     public final static String EMERG_ID = "edu.upenn.cis350.rapidresponse.MESSAGE";
     String location = null;
     public ParseUser currUser = null;
     public int check = 0;
 
-
+    /**
+     * Method loads UI and view for user, sets up necessary location spinner and
+     * Edit/Logout options as well.
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
 
+        //connect to Parse
         Parse.initialize(this, "MEVkVnjwbter5JAP7mZIeg7747UA1QiBb7mOZ4Ch", "F48WFS83CHeSMqNu4i8ugGrVhO3KozZvS2PKQNNw");
         currUser = ParseUser.getCurrentUser();
+
         Spinner spinner = (Spinner) findViewById(R.id.location_info);
+
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.location_array, android.R.layout.simple_spinner_item);
+
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         location = currUser.getString("Building");
+
+        //Record chosen location for user convenience
         TextView loc = (TextView) findViewById(R.id.location_state);
         loc.setText("Current Recorded Building: " +location);
 
         spinner.setOnItemSelectedListener(this);
 
+        //load 5 most recent emergencies pertaining to user
         displayNotifications();
 
     }
+
+    /**
+     * Class searches for previous emergencies within Parse that took place in registered building
+     * and that called the user's current team.
+     */
     private void displayNotifications(){
+
+        //Retrieve list of emergencies
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Alert");
         query.whereEqualTo("Roles", currUser.get("Role"));
         query.whereContains("Building", currUser.get("Building").toString());
@@ -80,6 +102,9 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         });
     }
 
+    /**
+     * If no emergencies were found in query, populate all buttons with the empty string
+     */
     private void clearContents(){
 
         Button b = (Button) findViewById(R.id.button1);
@@ -98,6 +123,12 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         b.setText("");
     }
 
+    /**
+     * Given a list of ParseObjects of emergencies pertaining to user, populate the text onto
+     * the buttons so that users may see description, room number and have the option to select
+     * emergency for further details
+     * @param emergencies
+     */
     @TargetApi(11)
     private void populateButtons(List<ParseObject> emergencies){
         for(int i = 0; i<emergencies.size(); i++){
@@ -122,40 +153,76 @@ public class Homepage extends Activity implements AdapterView.OnItemSelectedList
         }
     }
 
+    /**
+     * Item listener for the spinner. Spinner automatically displays user's current location, but
+     * changes the location within Parse database for the user once a different location is selected
+     * through this spinner
+     * @param parent
+     * @param view
+     * @param pos
+     * @param id
+     */
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         check = check+1;
-        if (check>1){
-        location = parent.getItemAtPosition(pos).toString();
-        if(location.equals("All")) location = "Founders,Pereleman Center,Rhoads,Silverstein";
-        TextView loc = (TextView) findViewById(R.id.location_state);
-        loc.setText("Current Recorded Building: " +location);
-        currUser.put("Building", location);
-        currUser.saveInBackground();
-        displayNotifications();}
+
+        //This is to avoid autochanging when the Activity loads since this method is called upon
+        //loading the page
+        if (check>1) {
+            location = parent.getItemAtPosition(pos).toString();
+            if (location.equals("All")) location = "Founders,Pereleman Center,Rhoads,Silverstein";
+            TextView loc = (TextView) findViewById(R.id.location_state);
+            loc.setText("Current Recorded Building: " + location);
+            currUser.put("Building", location);
+            currUser.saveInBackground();
+            displayNotifications();
+        }
     }
 
+    /**
+     * When nothing selected on spinner, no action needs to be taken
+     * @param parent
+     */
     public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
+        // do nothing
     }
 
+    /**
+     * Method run when user selects "Logout" button.
+     * Changes view back to Main, prompts user to log back in if desired
+     * @param view
+     */
     public void onLogoutButtonClick(View view){
+
         final ProgressDialog dialog = new ProgressDialog(Homepage.this);
         dialog.setMessage("Signing in");
         dialog.show();
+
+        //log out in Parse
         ParseUser.getCurrentUser().put("LoggedIn", false);
         ParseUser.getCurrentUser().saveInBackground();
         ParseUser.logOut();
+
+        //change activity back to Main, option to log in
         Intent i = new Intent(this, Main.class);
         dialog.dismiss();
         startActivityForResult(i, 1);
     }
 
+    /**
+     * Method that sends user to EditActivity to Edit information they input upon login
+     * @param view
+     */
     public void onEditClick(View view){
         Intent i = new Intent(this, EditActivity.class);
         startActivityForResult(i,1);
     }
 
+    /**
+     * When user clicks on any of the buttons with emergency descriptions on them, this method runs
+     * Creates new description page through Emergency.class
+     * @param view
+     */
     @TargetApi(11)
     public void onButtonClick(View view){
         Intent intent = new Intent(Homepage.this, Emergency.class);

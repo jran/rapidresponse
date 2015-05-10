@@ -22,6 +22,11 @@ import com.parse.SignUpCallback;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Allows new users (members of a rapid response team) to create an account that they will
+ * use to log into the app on future occasions
+ */
+
 public class RegisterActivity extends Activity implements AdapterView.OnItemSelectedListener{
     private EditText firstNameEditText;
     private EditText lastNameEditText;
@@ -89,18 +94,12 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
             }
         });
 
-        Spinner buildingSpinner = (Spinner)findViewById(R.id.buildingSpinner);
-        String[] items = new String[]{"Founders", "Pereleman Center", "Rhoads", "Silverstein"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
-        buildingSpinner.setAdapter(adapter);
-        buildingSpinner.setOnItemSelectedListener(this);
+        createBuildingSpinner();
 
-        Spinner roleSpinner = (Spinner)findViewById(R.id.roleSpinner);
-        items = new String[]{"Medicine Resident", "Surgical Resident", "OB Resident", "Pharmacist",
-            "CCOPS", "Respiratory Therapy", "Coordinator", "Anesthesia", "Other"};
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
-        roleSpinner.setAdapter(adapter);
-        roleSpinner.setOnItemSelectedListener(this);
+        String[] items;
+        ArrayAdapter<String> adapter;
+
+        createRoleSpinner();
 
         Button mEmailSignUpButton = (Button) findViewById(R.id.email_register_button);
         mEmailSignUpButton.setOnClickListener(new OnClickListener() {
@@ -109,6 +108,24 @@ public class RegisterActivity extends Activity implements AdapterView.OnItemSele
                 attemptSignUp();
             }
         });
+    }
+
+    private void createRoleSpinner() {
+        String[] items;
+        ArrayAdapter<String> adapter;Spinner roleSpinner = (Spinner)findViewById(R.id.roleSpinner);
+        items = new String[]{"Medicine Resident", "Surgical Resident", "OB Resident", "Pharmacist",
+            "CCOPS", "Respiratory Therapy", "Coordinator", "Anesthesia", "Other"};
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+        roleSpinner.setAdapter(adapter);
+        roleSpinner.setOnItemSelectedListener(this);
+    }
+
+    private void createBuildingSpinner() {
+        Spinner buildingSpinner = (Spinner)findViewById(R.id.buildingSpinner);
+        String[] items = new String[]{"Founders", "Pereleman Center", "Rhoads", "Silverstein"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+        buildingSpinner.setAdapter(adapter);
+        buildingSpinner.setOnItemSelectedListener(this);
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,

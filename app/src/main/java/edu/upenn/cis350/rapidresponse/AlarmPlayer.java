@@ -11,7 +11,6 @@ public class AlarmPlayer {
     private static MediaPlayer mPlayer;
     private static boolean on=false;
 
-
     public static void initialize(Context c){
         mPlayer = MediaPlayer.create(c, R.raw.loudalert);
     }
@@ -30,6 +29,5 @@ public class AlarmPlayer {
     public static boolean isOn(){
         return on;
     }
-
 
 }

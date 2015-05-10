@@ -27,22 +27,10 @@ import static com.parse.ParseUser.requestPasswordResetInBackground;
 
 /**
  * A login screen that offers login via email/password and via Google+ sign in.
- * <p/>
- * ************ IMPORTANT SETUP NOTES: ************
- * In order for Google+ sign in to work with your app, you must first go to:
- * https://developers.google.com/+/mobile/android/getting-started#step_1_enable_the_google_api
- * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
+ *
  */
 
 
-/**
- * A login screen that offers login via email/password and via Google+ sign in.
- * <p/>
- * ************ IMPORTANT SETUP NOTES: ************
- * In order for Google+ sign in to work with your app, you must first go to:
- * https://developers.google.com/+/mobile/android/getting-started#step_1_enable_the_google_api
- * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
- */
 public class Main extends Activity {
 
 
@@ -57,8 +45,8 @@ public class Main extends Activity {
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        //populateAutoComplete();
 
+        //populateAutoComplete();
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -83,11 +71,6 @@ public class Main extends Activity {
 
         }
     }
-
-    /*private void populateAutoComplete() {
-        getLoaderManager().initLoader(0, null, this);
-    }*/
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -157,8 +140,6 @@ public class Main extends Activity {
         Intent i = new Intent(this, RegisterActivity.class);
         startActivityForResult(i, 1);
     }
-
-
 
     private void updateUserInstallation(ProgressDialog d){
         final ProgressDialog dialog = d;
